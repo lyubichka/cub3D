@@ -79,6 +79,19 @@ typedef struct s_keys
 	int	escape;
 }	t_keys;
 
+typedef struct s_cub3d
+{
+	void	*mlx;
+	void	*win;
+	t_scene	scene;
+	t_keys	keys;
+	double	player_x;
+	double	player_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_cub3d;
 
 // functions for parser
 t_scene	*parse_scene(const char *file_path, bool save_flag);
