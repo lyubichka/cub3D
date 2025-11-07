@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/10/15 17:21:06 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/06 19:22:07 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
@@ -65,6 +65,7 @@ typedef struct s_scene
 	t_colors	colors;
 	t_map		map;
 	int			save_bmp; // 1 if "--save", else 0
+	t_player	player;
 }	t_scene;
 
 // structure for key states
@@ -79,6 +80,25 @@ typedef struct s_keys
 	int	escape;
 }	t_keys;
 
+// structure for image data
+typedef struct s_image {
+    void    *img;
+    char    *addr;
+    int     bpp;
+    int     line_len;
+    int     endian;
+} t_image;
+
+// structure for player (raycasting)
+typedef struct s_player
+{
+    double pos_x;
+    double pos_y;
+    double dir_x;
+    double dir_y;
+    double plane_x;
+    double plane_y;
+}   t_player;
 
 // functions for parser
 t_scene	*parse_scene(const char *file_path, bool save_flag);
@@ -90,7 +110,13 @@ void	parse_map(int fd, t_scene *scene, char *first_line);
 void	validate_map(t_map *map);
 int		create_rgb_int(int r, int g, int b);
 
+// functions for rendering
+void	render_scene(t_scene *scene, void *mlx, void *win);
+void	init_image(void *mlx, t_image *img, int width, int height);
+void	put_pixel(t_image *img, int x, int y, int color);
+
 #endif
+
 
 
 // for you now
