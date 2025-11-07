@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:22:07 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/07 20:45:45 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,20 @@ typedef struct s_keys
 	int	right;
 	int	escape;
 }	t_keys;
+
+typedef struct s_cub3d
+{
+	void	*mlx;
+	void	*win;
+	t_scene	scene;
+	t_keys	keys;
+	double	player_x;
+	double	player_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}	t_cub3d;
 
 // structure for image data
 typedef struct s_image {
