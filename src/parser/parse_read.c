@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:16:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:20:00 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/08 17:30:09 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../../include/cub3D.h"
 
 // Первый проход: посчитать строки в файле
 static int count_file_lines(const char *path)

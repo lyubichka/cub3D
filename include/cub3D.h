@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/07 20:49:14 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/11 19:57:13 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ typedef struct s_map
 	char	player_dir;   // 'N', 'S', 'E', 'W'
 }	t_map;
 
+// structure for player (raycasting)
+typedef struct s_player
+{
+    double pos_x;
+    double pos_y;
+    double dir_x;
+    double dir_y;
+    double plane_x;
+    double plane_y;
+}   t_player;
+
 // main structure of the scene (what you give to your partner)
 typedef struct s_scene
 {
@@ -80,18 +91,13 @@ typedef struct s_keys
 	int	escape;
 }	t_keys;
 
+// main structure for the cub3D program
 typedef struct s_cub3d
 {
 	void	*mlx;
 	void	*win;
 	t_scene	scene;
 	t_keys	keys;
-	double	player_x;
-	double	player_y;
-	double	dir_x;
-	double	dir_y;
-	double	plane_x;
-	double	plane_y;
 }	t_cub3d;
 
 // structure for image data
@@ -103,16 +109,27 @@ typedef struct s_image {
     int     endian;
 } t_image;
 
-// structure for player (raycasting)
-typedef struct s_player
+// struct for ray
+typedef struct s_ray
 {
-    double pos_x;
-    double pos_y;
-    double dir_x;
-    double dir_y;
-    double plane_x;
-    double plane_y;
-}   t_player;
+	double rayDirX;
+	double rayDirY;
+	int mapX;
+	int mapY;
+	double sideDistX;
+	double sideDistY;
+	double deltaDistX;
+	double deltaDistY;
+	int stepX;
+	int stepY;
+	int hit;
+	int side;
+	double perpWallDist;
+	int lineHeight;
+	int drawStart;
+	int drawEnd;
+}	t_ray;
+
 
 // functions for parser
 t_scene	*parse_scene(const char *file_path, bool save_flag);
@@ -124,10 +141,19 @@ void	parse_map(int fd, t_scene *scene, char *first_line);
 void	validate_map(t_map *map);
 int		create_rgb_int(int r, int g, int b);
 
+// execution
+
 // functions for rendering
-void	render_scene(t_scene *scene, void *mlx, void *win);
+void	run_engine(t_scene *scene);
+void	render_scene(t_cub3d *cub);
 void	init_image(void *mlx, t_image *img, int width, int height);
 void	put_pixel(t_image *img, int x, int y, int color);
+
+// functions for player
+void	init_player(t_scene *scene);
+
+// utility functions
+void	print_error(const char *msg);
 
 #endif
 

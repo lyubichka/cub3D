@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:22:43 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/06 19:27:52 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/07 20:57:45 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "../../../include/cub3D.h"
 
 static void	set_dir_plane(t_scene *scene, char dir)
 {

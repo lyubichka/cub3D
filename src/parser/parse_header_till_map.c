@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_header_till_map.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:21:38 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:26:10 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/08 17:29:47 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/cub3D.h"
 
 // Проверка: строка состоит только из допустимых символов карты (' ', '0', '1', 'N', 'S', 'E', 'W')
 static int is_map_line(const char *s)

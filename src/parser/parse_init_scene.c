@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_init_scene.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:19:10 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:20:34 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/08 17:29:54 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/cub3D.h"
 
 static void init_scene_defaults(t_scene *scene)
 {

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:24:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:25:54 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/08 17:29:34 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../include/cub3D.h"
 
 // Хелперы для компактной обработки заголовков
 static void handle_texture(char *trim, char **lines, bool *seen,

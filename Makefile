@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+         #
+#    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2025/11/06 17:50:38 by haiqbal          ###   ########.fr        #
+#    Updated: 2025/11/08 17:42:07 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,15 +35,31 @@ OBJ_DIR = obj
 INC_DIR = include
 
 EXEC_DIR = $(SRC_DIR)/execution
-MAPS_DIR = $(SRC_DIR)/maps
+# MAPS_DIR = $(SRC_DIR)/maps
+PARS_DIR = $(SRC_DIR)/parsing
+
+REN_DIR = $(EXEC_DIR)/render
+PLAY_DIR = $(EXEC_DIR)/player
 
 # ============================================================================ #
 #                                   SOURCE FILES                               #
 # ============================================================================ #
 
 SRCS = $(SRC_DIR)/main.c \
-       $(EXEC_DIR)/render_utils.c \
-       $(EXEC_DIR)/rendering.c
+	   $(SRC_DIR)/utils.c \
+	   $(EXEC_DIR)/execution.c \
+	   $(REN_DIR)/render_utils.c \
+	   $(REN_DIR)/rendering.c \
+	   $(PLAY_DIR)/init_player.c \
+	   $(PARS_DIR)/handle.c \
+	   $(PARS_DIR)/parse_header_till_map.c \
+	   $(PARS_DIR)/parse_init_scene.c \
+	   $(PARS_DIR)/parse_map.c \
+	   $(PARS_DIR)/parse_read.c \
+	   $(PARS_DIR)/parse_resolution.c \
+	   $(PARS_DIR)/parse_textures.c \
+	   $(PARS_DIR)/parse_scene.c \
+	   $(PARS_DIR)/parse_free.c 
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -56,17 +72,22 @@ LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 
-# MiniLibX
-MLX_DIR = minilibx-linux
+# MiniLibX Linux
+# MLX_DIR = minilibx-linux
+# MLX = $(MLX_DIR)/libmlx.a
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
+
+# MiniLibX MacOS
+MLX_DIR = mlx
 MLX = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # ============================================================================ #
 #                                   COMPILATION                                #
 # ============================================================================ #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -DGL_SILENCE_DEPRECATION
 INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
 
 # ============================================================================ #
@@ -79,10 +100,14 @@ all: $(NAME)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/execution
+	@mkdir -p $(OBJ_DIR)/execution/render
+	@mkdir -p $(OBJ_DIR)/execution/player
+	@mkdir -p $(OBJ_DIR)/parsing
 
 # Compile object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@echo "$(BLUE)Compiling $<...$(RESET)"
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # Build libraries
@@ -90,8 +115,9 @@ $(LIBFT):
 	@echo "$(YELLOW)Building libft...$(RESET)"
 	@make -C $(LIBFT_DIR) --no-print-directory
 
+# Update the MLX build message to match macOS
 $(MLX):
-	@echo "$(YELLOW)Building minilibx-linux...$(RESET)"
+	@echo "$(YELLOW)Building minilibx-opengl...$(RESET)"
 	@make -C $(MLX_DIR) --no-print-directory
 
 # Link executable
@@ -123,10 +149,10 @@ run: $(NAME)
 	@echo "$(BLUE)Running $(NAME)...$(RESET)"
 	@./$(NAME) $(MAPS_DIR)/test.cub
 
-# Debug with valgrind
+# Update valgrind rule for macOS (use leaks instead)
 valgrind: $(NAME)
-	@echo "$(BLUE)Running valgrind...$(RESET)"
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(MAPS_DIR)/test.cub
+	@echo "$(BLUE)Running memory leak check...$(RESET)"
+	@leaks --atExit -- ./$(NAME) $(MAPS_DIR)/test.cub
 
 # Show help
 help:
