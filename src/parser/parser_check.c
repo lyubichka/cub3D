@@ -12,9 +12,6 @@
 
 #include "../include/cub3D.h"
 
-/*
- * Проверка, что карта замкнута стенами (очень простая версия)
- */
 static char    get_at(t_scene *scene, int y, int x)
 {
     if (y < 0 || y >= scene->map.height || x < 0 || x >= scene->map.width)
