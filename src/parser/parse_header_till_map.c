@@ -6,18 +6,18 @@
 /*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:21:38 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:26:10 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/17 12:03:42 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/cub3D.h"
 
 // Проверка: строка состоит только из допустимых символов карты (' ', '0', '1', 'N', 'S', 'E', 'W')
-static int is_map_line(const char *s)
+int is_map_line(const char *s)
 {
     int i = 0;
     if (!s)
         return 0;
-    // Пустая строка не является строкой карты
     if (s[0] == '\0')
         return 0;
     while (s[i])
@@ -31,35 +31,73 @@ static int is_map_line(const char *s)
     return 1;
 }
 
-static int parse_header_until_map(char **lines, t_scene *scene)
+// Обработка одной строки заголовка; возвращает следующий индекс или -1 для break
+static int decide_line_kind(t_hdr_ctx *ctx, int i, char *trim)
 {
-    int i = 0;
-    int map_start = -1;
-    bool seen_r = false, seen_no = false, seen_so = false;
-    bool seen_we = false, seen_ea = false, seen_s = false;
-    bool seen_f = false, seen_c = false;
-    while (lines[i])
+    int next_i;
+
+    next_i = i + 1;
+    if (trim[0] == '\0')
+        return (next_i);
+    if (is_map_line(ctx->lines[i]))
     {
-        char *trim = ft_strtrim(lines[i], " \t");
-        if (!trim) { free_split(lines); print_error("alloc fail"); }
-        if (trim[0] == '\0')
-        {
-            free(trim);
-            i++;
-            continue;
-        }
-        if (is_map_line(lines[i]))
-        {
-            free(trim);
-            map_start = i;
-            break;
-        }
-        handle_header_trim(trim, lines, scene, &seen_r, &seen_no, &seen_so, &seen_we, &seen_ea, &seen_s, &seen_f, &seen_c);
-        free(trim);
-        i++;
+        ctx->map_start = i;
+        return (-1);
     }
-    if (map_start == -1) { free_split(lines); print_error("Map section not found"); }
-    if (!seen_r || !seen_no || !seen_so || !seen_we || !seen_ea || !seen_s || !seen_f || !seen_c)
-    { free_split(lines); print_error("Missing one or more directives before map"); }
-    return (map_start);
+    return (0);
+}
+
+static int process_header_line(t_hdr_ctx *ctx, int i)
+{
+    char *trim;
+    int   kind;
+    int   res;
+
+    trim = ft_strtrim(ctx->lines[i], " \t");
+    if (!trim)
+    {
+        free_split(ctx->lines);
+        print_error("alloc fail");
+    }
+    kind = decide_line_kind(ctx, i, trim);
+    res = handle_kind_result(kind, trim);
+    if (res != 0)
+        return (res);
+    handle_header_trim_ctx(ctx, trim);
+    free(trim);
+    return (i + 1);
+}
+
+static void init_seen_flags(t_hdr_ctx *ctx)
+{
+    ctx->seen_r = false;
+    ctx->seen_no = false;
+    ctx->seen_so = false;
+    ctx->seen_we = false;
+    ctx->seen_ea = false;
+    ctx->seen_s = false;
+    ctx->seen_f = false;
+    ctx->seen_c = false;
+}
+
+int parse_header_until_map(char **lines, t_scene *scene)
+{
+    t_hdr_ctx ctx;
+    int       i;
+    int       next_i;
+
+    ctx.lines = lines;
+    ctx.scene = scene;
+    ctx.map_start = -1;
+    init_seen_flags(&ctx);
+    i = 0;
+    while (ctx.lines[i])
+    {
+        next_i = process_header_line(&ctx, i);
+        if (next_i == -1)
+            break;
+        i = next_i;
+    }
+    validate_after_header(&ctx);
+    return (ctx.map_start);
 }

@@ -6,36 +6,59 @@
 /*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:37:49 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/06 19:37:14 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/17 12:01:26 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
-#include <fcntl.h>
-#include <stdbool.h>
-#include "../../libft/get_next_line.h"
 
-static void ensure_cub_extension(const char *file_path)
+static void init_scene_defaults(t_scene *scene)
 {
-    size_t len;
-    
-    if (!file_path)
-        print_error("Error: Invalid file extension. Expected .cub");
-    len = ft_strlen(file_path);
-    if (len < 4 || ft_strncmp(file_path + len - 4, ".cub", 4) != 0)
-        print_error("Error: Invalid file extension. Expected .cub");
+    scene->screen_width = 0;
+    scene->screen_height = 0;
+    scene->textures.north = NULL;
+    scene->textures.south = NULL;
+    scene->textures.west = NULL;
+    scene->textures.east = NULL;
+    scene->textures.sprite = NULL;
+    scene->colors.floor[0] = 0;
+    scene->colors.floor[1] = 0;
+    scene->colors.floor[2] = 0;
+    scene->colors.ceiling[0] = 0;
+    scene->colors.ceiling[1] = 0;
+    scene->colors.ceiling[2] = 0;
+    scene->colors.floor_color = -1;
+    scene->colors.ceiling_color = -1;
+    scene->map.grid = NULL;
+    scene->map.width = 0;
+    scene->map.height = 0;
+    scene->map.player_x = 0;
+    scene->map.player_y = 0;
+    scene->map.player_dir = 'N';
+}
+
+t_scene *init_scene(bool save_flag)
+{
+    t_scene *scene;
+
+    scene = (t_scene *)ft_calloc(1, sizeof(t_scene));
+    if (!scene)
+        print_error("Error: Memory allocation failed for t_scene");
+    if (save_flag)
+        scene->save_bmp = 1;
+    else
+        scene->save_bmp = 0;
+    init_scene_defaults(scene);
+    return (scene);
 }
 
 // Проверки после карты и освобождение lines
 static void post_map_and_final_checks(char **lines, t_scene *scene)
 {
     free_split(lines);
-    if (scene->screen_width <= 0 || scene->screen_height <= 0)
-        print_error("Resolution not set or invalid");
     if (!scene->textures.north || !scene->textures.south ||
-        !scene->textures.west || !scene->textures.east ||
-        !scene->textures.sprite)
-        print_error("One or more texture paths are missing");
+        !scene->textures.west || !scene->textures.east)
+        print_error("One or more mandatory textures are missing");
     if (scene->colors.floor_color == -1 || scene->colors.ceiling_color == -1)
         print_error("Floor or ceiling color is missing");
     if (!scene->map.grid || scene->map.width <= 0 || scene->map.height <= 0)
@@ -74,11 +97,16 @@ static void enforce_map_block_rules(char **lines, int map_start)
 t_scene *parse_scene(const char *file_path, bool save_flag)
 {
     t_scene *scene;
-    char **lines;
-    int map_start;
+    char    **lines;
+    int     map_start;
+    size_t  len;
 
-    ensure_cub_extension(file_path);
-    scene = alloc_init_scene(save_flag);
+    if (!file_path)
+        print_error("Error: Invalid file extension. Expected .cub");
+    len = ft_strlen(file_path);
+    if (len < 4 || ft_strncmp(file_path + len - 4, ".cub", 4) != 0)
+        print_error("Error: Invalid file extension. Expected .cub");
+    scene = init_scene(save_flag);
     lines = read_lines_from_path(file_path);
     map_start = parse_header_until_map(lines, scene);
     enforce_map_block_rules(lines, map_start);
