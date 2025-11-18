@@ -6,7 +6,7 @@
 #    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2025/11/19 00:23:07 by haiqbal          ###   ########.fr        #
+#    Updated: 2025/11/19 00:44:18 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,8 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(EXEC_DIR)/render_utils.c \
 	   $(EXEC_DIR)/rendering.c \
 	   $(EXEC_DIR)/init_player.c \
+	   $(EXEC_DIR)/keys_n_movement.c \
+	   $(EXEC_DIR)/utils1.c \
 	   $(PARS_DIR)/dup_or_parse.c \
 	   $(PARS_DIR)/handle_kind_validate.c \
 	   $(PARS_DIR)/handle_so_no_we_ea_s.c \

@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 20:18:55 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 00:41:30 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ int      parse_header_until_map(char **lines, t_scene *scene);
 int      is_map_line(const char *s);
 void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
 void     print_error(const char *msg);
-// void     run_engine(t_scene *scene);
 void	free_split(char **arr);
 int		handle_kind_result(int kind, char *trim);
 void	validate_after_header(t_hdr_ctx *ctx);
@@ -209,6 +208,7 @@ int      handle_s(t_hdr_ctx *ctx, char *trim);
 
 // execution
 void	run_engine(t_scene *scene);
+int		frame_loop(void *param);
 
 // functions for rendering
 void	render_scene(t_cub3d *cub);
@@ -219,11 +219,18 @@ void	perform_dda(t_cub3d *cub, t_ray *ray);
 void	compute_wall_height(t_cub3d *cub, t_ray *ray);
 void	draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray);
 
+// key handling functions
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+void	handle_keys(t_cub3d *cub);
+
 // functions for player
 void	init_player(t_scene *scene);
 
 // utility functions
 void	print_error(const char *msg);
+int		handle_close(void *param);
+
 
 #endif
 
