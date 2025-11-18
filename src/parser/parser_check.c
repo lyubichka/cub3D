@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:33:27 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/16 19:48:24 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 20:13:53 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void check_adjacent_spaces(t_scene *scene, int y, int x)
         print_error("Map has open space adjacent to floor/player");
 }
 
-static void check_interior_cells(t_scene *scene)
+void check_interior_cells(t_scene *scene)
 {
     int y;
     int x;
@@ -52,7 +52,7 @@ static void check_interior_cells(t_scene *scene)
     }
 }
 
-static void check_top_bottom_borders(t_scene *scene)
+void check_top_bottom_borders(t_scene *scene)
 {
     int x;
     x = 0;
@@ -69,7 +69,7 @@ static void check_top_bottom_borders(t_scene *scene)
     }
 }
 
-static void check_left_right_borders(t_scene *scene)
+void check_left_right_borders(t_scene *scene)
 {
     int y;
     char l;

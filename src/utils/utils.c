@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:59:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/16 19:42:57 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 20:17:16 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../../include/cub3D.h"
 
 void print_error(const char *msg)
 {
@@ -36,7 +36,7 @@ int	is_number_str(const char *s)
     return (1);
 }
 
-static int	get_max_width(char **lines, int start, int end)
+int	get_max_width(char **lines, int start, int end)
 {
     int	max = 0;
     int	len;
@@ -51,7 +51,7 @@ static int	get_max_width(char **lines, int start, int end)
 	    return (max);
 }
 
-static int is_player(char c)
+int is_player(char c)
 {
     return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }

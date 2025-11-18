@@ -6,11 +6,11 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:30:00 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/18 16:46:49 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 00:24:17 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../include/cub3D.h"
+#include "../../include/cub3D.h"
 
 void compute_ray(t_cub3d *cub, int x, t_ray *ray)
 {

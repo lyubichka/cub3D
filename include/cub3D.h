@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 17:23:15 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/18 20:18:55 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-# include <mlx.h>
+# include "../mlx/mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdbool.h>
@@ -25,6 +25,15 @@
 // constants 
 # define MAX_MAP_HEIGHT 100
 # define MAX_MAP_WIDTH  100
+
+// key codes
+# define KEY_W      13    /* W */
+# define KEY_A      0     /* A */
+# define KEY_S      1     /* S */
+# define KEY_D      2     /* D */
+# define KEY_LEFT   123   /* Left arrow */
+# define KEY_RIGHT  124   /* Right arrow */
+# define KEY_ESC    53    /* Escape */
 
 // structure for texture paths
 typedef struct s_textures
@@ -175,10 +184,16 @@ int      parse_header_until_map(char **lines, t_scene *scene);
 int      is_map_line(const char *s);
 void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
 void     print_error(const char *msg);
-void     run_engine(t_scene *scene);
-void     free_split(char **arr);
-int      handle_kind_result(int kind, char *trim);
-void     validate_after_header(t_hdr_ctx *ctx);
+// void     run_engine(t_scene *scene);
+void	free_split(char **arr);
+int		handle_kind_result(int kind, char *trim);
+void	validate_after_header(t_hdr_ctx *ctx);
+int		get_max_width(char **lines, int start, int end);
+void	check_top_bottom_borders(t_scene *scene);
+void	check_left_right_borders(t_scene *scene);
+void	check_interior_cells(t_scene *scene);
+int		is_player(char c);
+
 
 /* cross-file header handling helpers */
 void     dup_or_parse_texture(t_hdr_ctx *ctx, char *trim, bool *seen,
@@ -193,12 +208,16 @@ int      handle_ea(t_hdr_ctx *ctx, char *trim);
 int      handle_s(t_hdr_ctx *ctx, char *trim);
 
 // execution
+void	run_engine(t_scene *scene);
 
 // functions for rendering
-void	run_engine(t_scene *scene);
 void	render_scene(t_cub3d *cub);
 void	init_image(void *mlx, t_image *img, int width, int height);
 void	put_pixel(t_image *img, int x, int y, int color);
+void	compute_ray(t_cub3d *cub, int x, t_ray *ray);
+void	perform_dda(t_cub3d *cub, t_ray *ray);
+void	compute_wall_height(t_cub3d *cub, t_ray *ray);
+void	draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray);
 
 // functions for player
 void	init_player(t_scene *scene);

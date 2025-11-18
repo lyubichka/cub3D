@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:18:11 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/17 12:01:07 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 20:58:04 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
