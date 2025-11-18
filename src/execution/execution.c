@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 00:46:15 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 00:48:16 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,3 @@ void 	render_scene(t_cub3d *cub)
 	mlx_put_image_to_window(cub->mlx, cub->win, img.img, 0, 0);
 	mlx_destroy_image(cub->mlx, img.img);
 }
-
