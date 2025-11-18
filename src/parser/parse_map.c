@@ -6,179 +6,111 @@
 /*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:42 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/01 01:04:19 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/16 19:48:24 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-/*
- * Проверяет, допустим ли символ
- */
-static bool	is_valid_map_char(char c)
+static void validate_map_line(t_map_build_ctx *ctx, int i)
 {
-    return (c == '0' || c == '1' || c == 'N' || c == 'S' || 
-            c == 'E' || c == 'W' || c == ' ');
-}
+    int k;
+    char c;
 
-/*
- * Считает количество строк карты
- */
-static int	count_map_lines(char **lines, int start)
-{
-	int	i = start;
-
-	while (lines[i] && lines[i][0] != '\0')
-		i++;
-	return (i - start);
-}
-
-/*
- * Проверяет, что карта прямоугольная (все строки одной длины)
- */
-static int	get_max_width(char **lines, int start, int end)
-{
-	int	max = 0;
-	int	len;
-
-	while (start < end)
-	{
-		len = ft_strlen(lines[start]);
-		if (len > max)
-			max = len;
-		start++;
-	}
-	return (max);
-}
-
-/*
- * Проверка, что карта замкнута стенами (очень простая версия)
- */
-static char    get_at(t_scene *scene, int y, int x)
-{
-    if (y < 0 || y >= scene->map.height || x < 0 || x >= scene->map.width)
-        return (' ');
-    return (scene->map.grid[y][x]);
-}
-
-static int is_player(char c)
-{
-    return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-static void	check_map_closed(t_scene *scene)
-{
-    int y;
-    int x;
-
-    // Верхняя и нижняя границы не должны содержать пола/игрока
-    x = 0;
-    while (x < scene->map.width)
+    k = 0;
+    while (k < ctx->max_width)
     {
-        char t = get_at(scene, 0, x);
-        char b = get_at(scene, scene->map.height - 1, x);
-        if (t == '0' || is_player(t) || b == '0' || is_player(b))
-            print_error("Map not closed at top/bottom border");
-        x++;
-    }
-    // Левая и правая границы
-    y = 0;
-    while (y < scene->map.height)
-    {
-        char l = get_at(scene, y, 0);
-        char r = get_at(scene, y, scene->map.width - 1);
-        if (l == '0' || is_player(l) || r == '0' || is_player(r))
-            print_error("Map not closed at left/right border");
-        y++;
-    }
-    // Внутренние клетки: у пола/игрока не должно быть соседей-пробелов
-    y = 0;
-    while (y < scene->map.height)
-    {
-        x = 0;
-        while (x < scene->map.width)
+        c = ctx->scene->map.grid[i][k];
+        if (!(c == '0' || c == '1' || c == 'N' || c == 'S'
+              || c == 'E' || c == 'W' || c == ' '))
+            print_error("Invalid character in map");
+        if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
         {
-            char c = get_at(scene, y, x);
-            if (c == '0' || is_player(c))
-            {
-                if (get_at(scene, y - 1, x) == ' ' ||
-                    get_at(scene, y + 1, x) == ' ' ||
-                    get_at(scene, y, x - 1) == ' ' ||
-                    get_at(scene, y, x + 1) == ' ')
-                    print_error("Map has open space adjacent to floor/player");
-            }
-            x++;
+            if (ctx->player_found)
+                print_error("Multiple player positions found");
+            ctx->player_found = 1;
+            ctx->scene->map.player_x = k;
+            ctx->scene->map.player_y = i;
+            ctx->scene->map.player_dir = c;
         }
-        y++;
+        k++;
     }
 }
 
-/*
- * Главная функция парсинга карты
- */
-void	parse_map(char **lines, int start_line, t_scene *scene)
+static void build_map_line(t_map_build_ctx *ctx, int i, t_scene *scene)
 {
-    int	map_lines;
-    int	max_width;
-    int	i;
-    int	player_found = 0;
+    int src_len;
+    int j;
 
-	map_lines = count_map_lines(lines, start_line);
-    if (map_lines <= 0)
-        print_error("No map found in .cub file");
-    if (map_lines > MAX_MAP_HEIGHT)
-        print_error("Map height exceeds MAX_MAP_HEIGHT");
-    scene->map.grid = malloc(sizeof(char *) * (map_lines + 1));
-    if (!scene->map.grid)
-        print_error("Memory allocation failed for map");
-    max_width = get_max_width(lines, start_line, start_line + map_lines);
-    if (max_width > MAX_MAP_WIDTH)
-        print_error("Map width exceeds MAX_MAP_WIDTH");
+    src_len = ft_strlen(ctx->lines[ctx->start_line + i]);
+    scene->map.grid[i] = (char *)malloc(ctx->max_width + 1);
+    if (!scene->map.grid[i])
+        print_error("Map line allocation failed");
+    j = 0;
+    while (j < src_len)
+    {
+        scene->map.grid[i][j] = ctx->lines[ctx->start_line + i][j];
+        j++;
+    }
+    while (j < ctx->max_width)
+    {
+        scene->map.grid[i][j] = ' ';
+        j++;
+    }
+    scene->map.grid[i][ctx->max_width] = '\0';
+    validate_map_line(ctx, i);
+}
+
+static void build_map(t_map_build_ctx *ctx, t_scene *scene)
+{
+    int i;
+
     i = 0;
-    while (i < map_lines)
+    while (i < ctx->map_lines)
     {
-        int src_len = ft_strlen(lines[start_line + i]);
-        int j;
-        scene->map.grid[i] = (char *)malloc(max_width + 1);
-        if (!scene->map.grid[i])
-            print_error("Map line allocation failed");
-        // Копируем исходную строку и дополняем пробелами до прямоугольника
-        j = 0;
-        while (j < src_len)
-        {
-            scene->map.grid[i][j] = lines[start_line + i][j];
-            j++;
-        }
-        while (j < max_width)
-            scene->map.grid[i][j++] = ' ';
-        scene->map.grid[i][max_width] = '\0';
-        // Проверка символов и поиск игрока
-            int k = 0;
-            while (k < max_width)
-            {
-                char c = scene->map.grid[i][k];
-                if (!is_valid_map_char(c))
-                    print_error("Invalid character in map");
-                if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-                {
-                    if (player_found)
-                        print_error("Multiple player positions found");
-                    player_found = 1;
-                    scene->map.player_x = k;
-                    scene->map.player_y = i;
-                    scene->map.player_dir = c;
-                }
-                k++;
-            }
+        build_map_line(ctx, i, scene);
         i++;
     }
     scene->map.grid[i] = NULL;
+}
 
-    scene->map.height = map_lines;
-    scene->map.width = max_width;
+static void preflight_map(t_map_build_ctx *ctx)
+{
+    int start;
+    int i;
 
-    if (!player_found)
+    start = ctx->start_line;
+    i = start;
+    while (ctx->lines[i] && ctx->lines[i][0] != '\0')
+        i++;
+    ctx->map_lines = i - start;
+    if (ctx->map_lines <= 0)
+        print_error("No map found in .cub file");
+    if (ctx->map_lines > MAX_MAP_HEIGHT)
+        print_error("Map height exceeds MAX_MAP_HEIGHT");
+    ctx->scene->map.grid = malloc(sizeof(char *) * (ctx->map_lines + 1));
+    if (!ctx->scene->map.grid)
+        print_error("Memory allocation failed for map");
+    ctx->max_width = get_max_width(ctx->lines, start, start + ctx->map_lines);
+    if (ctx->max_width > MAX_MAP_WIDTH)
+        print_error("Map width exceeds MAX_MAP_WIDTH");
+}
+
+void	parse_map(char **lines, int start_line, t_scene *scene)
+{
+    t_map_build_ctx ctx;
+
+    ctx.lines = lines;
+    ctx.start_line = start_line;
+    ctx.player_found = 0;
+    ctx.scene = scene;
+    preflight_map(&ctx);
+    build_map(&ctx, scene);
+    scene->map.height = ctx.map_lines;
+    scene->map.width = ctx.max_width;
+    if (!ctx.player_found)
         print_error("No player start position found");
-
-    check_map_closed(scene);
+    check_top_bottom_borders(scene);
+    check_left_right_borders(scene);
+    check_interior_cells(scene);
 }

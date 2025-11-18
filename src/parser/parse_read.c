@@ -6,16 +6,20 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:16:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/08 17:30:09 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/18 17:11:24 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
-
+#include <fcntl.h>
+#include "../../libft/get_next_line.h"
 // Первый проход: посчитать строки в файле
 static int count_file_lines(const char *path)
 {
-    int fd; int n = 0; char *line;
+    int fd;
+    int n = 0;
+    char *line;
+    
     fd = open(path, O_RDONLY);
     if (fd < 0)
         print_error("Error: Unable to open .cub file");
@@ -25,25 +29,29 @@ static int count_file_lines(const char *path)
         n++;
     }
     close(fd);
-    return (n);
+    return(n);
 }
 
-// Второй проход: выделить массив точного размера и заполнить
-static char **read_lines_from_path(const char *path)
+static char **malloc_lines(int size)
 {
-    int i = 0;
-    int count;
-    int size;
+    char **lines;
 
-    count = count_file_lines(path);
-    if (count > 0)
-        size = count;
-    else
+    if (size == 0)
         size = 1;
-    char **lines = (char **)malloc(sizeof(char *) * (size + 1));
-    int fd; char *line; int len;
+    lines = (char **)malloc(sizeof(char *) * (size + 1));
     if (!lines)
-        print_error("alloc fail");
+        print_error("Error: Unable to allocate memory for lines");
+    return lines;
+}
+
+static void read_lines(const char *path, char **lines, int count)
+{
+    int fd;
+    int i;
+    char *line;
+    int len;
+    
+    i = 0;
     fd = open(path, O_RDONLY);
     if (fd < 0)
         print_error("Error: Unable to open .cub file");
@@ -52,11 +60,26 @@ static char **read_lines_from_path(const char *path)
         len = ft_strlen(line);
         if (len > 0 && line[len - 1] == '\n')
             line[len - 1] = '\0';
-        lines[i++] = line;
+        lines[i] = line;
+        i++;
     }
     close(fd);
     if (count == 0)
-        lines[i++] = ft_strdup("");
+    {
+        lines[i] = ft_strdup("");
+        i++;
+    }
     lines[i] = NULL;
-    return (lines);
+}
+
+// Второй проход: выделить массив точного размера и заполнить
+char **read_lines_from_path(const char *path)
+{
+    int count;
+    char **lines;
+
+    count = count_file_lines(path);
+    lines = malloc_lines(count);
+    read_lines(path, lines, count);
+    return(lines);
 }

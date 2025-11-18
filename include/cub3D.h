@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/11 19:57:13 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/18 17:20:03 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,32 @@ typedef struct s_keys
 	int	escape;
 }	t_keys;
 
+// parser contexts
+typedef struct s_hdr_ctx
+{
+    char    **lines;
+    t_scene *scene;
+    int     map_start;
+    bool    seen_r;
+    bool    seen_no;
+    bool    seen_so;
+    bool    seen_we;
+    bool    seen_ea;
+    bool    seen_s;
+    bool    seen_f;
+    bool    seen_c;
+}   t_hdr_ctx;
+
+typedef struct s_map_build_ctx
+{
+    char **lines;
+    int   start_line;
+    int   map_lines;
+    int   max_width;
+    int   player_found;
+    t_scene *scene;
+}   t_map_build_ctx;
+
 // main structure for the cub3D program
 typedef struct s_cub3d
 {
@@ -137,9 +163,34 @@ void	free_scene(t_scene *scene);
 void	parse_resolution(char *line, t_scene *scene);
 void	parse_texture(char *line, t_scene *scene);
 void	parse_color(char *line, t_scene *scene);
-void	parse_map(int fd, t_scene *scene, char *first_line);
+void    parse_rgb(char **parts, int out[3]);
+void	parse_map(char **lines, int map_start, t_scene *scene);
 void	validate_map(t_map *map);
-int		create_rgb_int(int r, int g, int b);
+int		is_number_str(const char *s);
+
+// helpers used by parser
+t_scene *init_scene(bool save_flag);
+char   **read_lines_from_path(const char *path);
+int      parse_header_until_map(char **lines, t_scene *scene);
+int      is_map_line(const char *s);
+void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
+void     print_error(const char *msg);
+void     run_engine(t_scene *scene);
+void     free_split(char **arr);
+int      handle_kind_result(int kind, char *trim);
+void     validate_after_header(t_hdr_ctx *ctx);
+
+/* cross-file header handling helpers */
+void     dup_or_parse_texture(t_hdr_ctx *ctx, char *trim, bool *seen,
+                              const char *dup_msg);
+void     dup_or_parse_resolution(t_hdr_ctx *ctx, char *trim, bool *seen);
+void     dup_or_parse_color(t_hdr_ctx *ctx, char *trim, bool *seen,
+                            const char *dup_msg);
+int      handle_no(t_hdr_ctx *ctx, char *trim);
+int      handle_so(t_hdr_ctx *ctx, char *trim);
+int      handle_we(t_hdr_ctx *ctx, char *trim);
+int      handle_ea(t_hdr_ctx *ctx, char *trim);
+int      handle_s(t_hdr_ctx *ctx, char *trim);
 
 // execution
 

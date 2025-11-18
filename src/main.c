@@ -15,8 +15,9 @@
 int main(int argc, char **argv)
 {
 	t_scene *scene;
-	bool save_flag = false;
+	bool save_flag;
 
+	save_flag = false;
 	if (argc < 2 || argc > 3)
 	{
 		write(2, "Error\nwrong number of arguments\n", 33);
@@ -32,7 +33,6 @@ int main(int argc, char **argv)
 	scene = parse_scene(argv[1], save_flag);
 	/* run_engine запустит графику: если save_flag==1 — сохранит bmp и выйдет */
 	run_engine(scene);
- 
 	free_scene(scene);
 	return (0);
 }
