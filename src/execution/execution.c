@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 13:49:20 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 19:26:03 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ void render_scene(t_cub3d *cub)
 
 		perform_dda(cub, &ray);
 		compute_wall_height(cub, &ray);
-		draw_vertical_stripe(img, cub, x, &ray);
+		draw_vertical_stripe_textured(&cub->img, cub, x, &ray);
 
 		x++;
 	}
-
+	draw_minimap(cub, &cub->img);
 	/* draw the persistent image to the window; do NOT destroy the image */
 	mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
 }

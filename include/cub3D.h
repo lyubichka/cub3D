@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/19 13:48:50 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 20:41:24 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@
 # define KEY_LEFT   123   /* Left arrow */
 # define KEY_RIGHT  124   /* Right arrow */
 # define KEY_ESC    53    /* Escape */
+
+// texture identifiers
+# define TEX_NORTH 0
+# define TEX_SOUTH 1
+# define TEX_EAST  2
+# define TEX_WEST  3
+# define TEX_COUNT 4
+
+// minimap colors
+#define MINIMAP_BG     0x202020
+#define MINIMAP_WALL   0xFFFFFF
+#define MINIMAP_PLAYER 0xFF0000
+#define MINIMAP_DIR    0x00FF00
 
 // structure for texture paths
 typedef struct s_textures
@@ -133,6 +146,8 @@ typedef struct s_image {
 	int     bpp;
 	int     line_len;
 	int     endian;
+	int		width;
+	int		height;
 } t_image;
 
 // main structure for the cub3D program
@@ -143,6 +158,7 @@ typedef struct s_cub3d
 	t_scene	scene;
 	t_keys	keys;
 	t_image	img;
+	t_image	textures[TEX_COUNT];
 }	t_cub3d;
 
 // struct for ray
@@ -217,7 +233,9 @@ void	put_pixel(t_image *img, int x, int y, int color);
 void	compute_ray(t_cub3d *cub, int x, t_ray *ray);
 void	perform_dda(t_cub3d *cub, t_ray *ray);
 void	compute_wall_height(t_cub3d *cub, t_ray *ray);
-void	draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray);
+void	draw_vertical_stripe_textured(t_image *img, t_cub3d *cub, int x, t_ray *ray);
+int		save_bmp_file(t_image *img, int width, int height, const char *filename);
+int		save_mode_render_and_write(t_scene *scene, const char *out_filename);
 
 // key handling functions
 int		key_press(int keycode, void *param);
@@ -233,7 +251,10 @@ int		handle_close(void *param);
 
 // graphics functions
 void	init_graphics(t_cub3d *cub);
-
+void	load_textures(t_cub3d *cub);
+void	free_textures(t_cub3d *cub);
+int		get_tex_color(t_image *tex, int tx, int ty);
+void	draw_minimap(t_cub3d *cub, t_image *img);
 
 #endif
 

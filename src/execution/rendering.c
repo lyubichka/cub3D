@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:30:00 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 01:44:37 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 15:39:01 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,18 +133,70 @@ void compute_wall_height(t_cub3d *cub, t_ray *ray)
 	if (ray->drawEnd >= screen_h)
 		ray->drawEnd = screen_h - 1;
 }
-
-void draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+/*
+ * draw_vertical_stripe_textured:
+ * - img : frame buffer
+ * - cub : engine + textures
+ * - x   : column on screen
+ * - ray : ray data including drawStart/drawEnd/lineHeight/perpWallDist
+ */
+void draw_vertical_stripe_textured(t_image *img, t_cub3d *cub, int x, t_ray *ray)
 {
-	int y;
-	int color;
+	t_image *tex;
+	int		y;
+	double	wallX;
+	int		texX;
+	double	step;
+	double	texPos;
+	int		color;
+	int		texIdx;
 
-	if (ray->side == 1)
-		color = 0xAAAAAA;
+	/* choose texture based on side of wall and map orientation:
+	   for simplicity: if side==0 (vertical wall) pick east/west depending on rayDirX sign.
+	   if side==1 (horizontal) pick north/south depending on rayDirY sign.
+	*/
+	if (ray->side == 0)
+	{
+		if (ray->rayDirX > 0)
+			texIdx = TEX_WEST;  /* looking to +X hits west face */
+		else
+			texIdx = TEX_EAST;
+	}
 	else
-		color = 0xFFFFFF;
+	{
+		if (ray->rayDirY > 0)
+			texIdx = TEX_NORTH; /* looking to +Y hits north face */
+		else
+			texIdx = TEX_SOUTH;
+	}
+	tex = &cub->textures[texIdx];
 
-	/* draw ceiling until drawStart (if drawStart > 0) */
+	/* Calculate the exact position where the wall was hit (wallX),
+	   this is used to pick correct texture column.
+	   If side == 0, wall was hit at some y coordinate; else at some x.
+	*/
+	if (ray->side == 0)
+		wallX = cub->scene.player.pos_y + ray->perpWallDist * ray->rayDirY;
+	else
+		wallX = cub->scene.player.pos_x + ray->perpWallDist * ray->rayDirX;
+	wallX -= floor(wallX); /* keep fractional part only [0..1) */
+
+	/* texX is the texture x-coordinate */
+	texX = (int)(wallX * (double)tex->width);
+	/* flips when needed (so textures appear not mirrored) */
+	if (ray->side == 0 && ray->rayDirX > 0)
+		texX = tex->width - texX - 1;
+	if (ray->side == 1 && ray->rayDirY < 0)
+		texX = tex->width - texX - 1;
+
+	/* Step size in texture space for each screen pixel */
+	step = 1.0 * tex->height / (double)ray->lineHeight;
+
+	/* starting texture y coordinate */
+	texPos = (ray->drawStart - cub->scene.screen_height / 2 + ray->lineHeight / 2) * step;
+
+	/* draw ceiling above */
 	y = 0;
 	while (y < ray->drawStart)
 	{
@@ -152,18 +204,24 @@ void draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray)
 		y++;
 	}
 
-	/* draw wall slice only if there's something to draw */
-	if (ray->drawStart <= ray->drawEnd)
+	/* draw wall slice (texture sampled) */
+	y = ray->drawStart;
+	while (y <= ray->drawEnd)
 	{
-		y = ray->drawStart;
-		while (y <= ray->drawEnd)
-		{
-			put_pixel(img, x, y, color);
-			y++;
-		}
+		int texY = (int)texPos & (tex->height - 1); /* faster mod if power of two; OK otherwise */
+		/* get pixel from texture */
+		color = get_tex_color(tex, texX, texY);
+
+		/* shade if side==1 to simulate lighting (darker) */
+		if (ray->side == 1)
+			color = ((color >> 1) & 0x7F7F7F); /* simple half-brightness */
+
+		put_pixel(img, x, y, color);
+		texPos += step;
+		y++;
 	}
 
-	/* draw floor below drawEnd */
+	/* draw floor below */
 	y = ray->drawEnd + 1;
 	while (y < cub->scene.screen_height)
 	{
@@ -171,4 +229,5 @@ void draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray)
 		y++;
 	}
 }
+
 
