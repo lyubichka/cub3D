@@ -3,77 +3,173 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+         #
+#    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/14 18:52:55 by veronikalub       #+#    #+#              #
-#    Updated: 2025/11/14 18:52:56 by veronikalub      ###   ########.fr        #
+#    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
+#    Updated: 2025/11/19 00:23:07 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= cub3D
+# ============================================================================ #
+#                                   COLORS                                     #
+# ============================================================================ #
 
-# compilers and flags
-CC			:= cc
-CFLAGS		:= -Wall -Wextra -Werror
-INCLUDES	:= -Iinclude -Ilibft
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+BLUE = \033[0;34m
+RESET = \033[0m
 
-# directories
-SRC_DIR		:= src
-PARSER_DIR	:= $(SRC_DIR)/parser
-UTILS_DIR	:= $(SRC_DIR)/utils
+# ============================================================================ #
+#                                   PROGRAM                                    #
+# ============================================================================ #
 
-# sources
-SRCS		:= \
-	$(SRC_DIR)/main.c \
-	$(PARSER_DIR)/parse_scene.c \
-	$(PARSER_DIR)/parse_read.c \
-	$(PARSER_DIR)/parse_header_till_map.c \
-	$(PARSER_DIR)/handle.c \
-	$(PARSER_DIR)/parse_map.c \
-	$(PARSER_DIR)/parse_resolution.c \
-	$(PARSER_DIR)/parse_texture.c \
-	$(PARSER_DIR)/parse_color.c \
-	$(PARSER_DIR)/parse_rgb.c \
-	$(PARSER_DIR)/dup_or_parse.c \
-	$(PARSER_DIR)/handle_so_no_we_ea_s.c \
-	$(PARSER_DIR)/handle_kind_validate.c \
-	$(PARSER_DIR)/parser_check.c \
-	$(PARSER_DIR)/parser_free.c \
-	$(UTILS_DIR)/free_split.c \
-	$(UTILS_DIR)/utils.c \
-	$(UTILS_DIR)/stub_engine.c
+NAME = cub3D
 
-OBJS		:= $(SRCS:.c=.o)
+# ============================================================================ #
+#                                   DIRECTORIES                                #
+# ============================================================================ #
 
-# libraries
-LIBFT_DIR	:= libft
-LIBFT_A		:= $(LIBFT_DIR)/libft.a
+SRC_DIR = src
+OBJ_DIR = obj
+INC_DIR = include
 
-MLX_DIR		:= minilibx-linux
-MLX_A		:= $(MLX_DIR)/libmlx.a
-MLX_FLAGS	:= -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
+EXEC_DIR = $(SRC_DIR)/execution
+# MAPS_DIR = $(SRC_DIR)/maps
+PARS_DIR = $(SRC_DIR)/parser
+UTL_DIR = $(SRC_DIR)/utils
 
-.PHONY: all clean fclean re bonus
+# ============================================================================ #
+#                                   SOURCE FILES                               #
+# ============================================================================ #
+
+SRCS = $(SRC_DIR)/main.c \
+	   $(EXEC_DIR)/execution.c \
+	   $(EXEC_DIR)/render_utils.c \
+	   $(EXEC_DIR)/rendering.c \
+	   $(EXEC_DIR)/init_player.c \
+	   $(PARS_DIR)/dup_or_parse.c \
+	   $(PARS_DIR)/handle_kind_validate.c \
+	   $(PARS_DIR)/handle_so_no_we_ea_s.c \
+	   $(PARS_DIR)/handle.c \
+	   $(PARS_DIR)/parse_color.c \
+	   $(PARS_DIR)/parse_header_till_map.c \
+	   $(PARS_DIR)/parse_map.c \
+	   $(PARS_DIR)/parse_read.c \
+	   $(PARS_DIR)/parse_resolution.c \
+	   $(PARS_DIR)/parse_rgb.c \
+	   $(PARS_DIR)/parse_texture.c \
+	   $(PARS_DIR)/parse_scene.c \
+	   $(PARS_DIR)/parser_free.c \
+	   $(PARS_DIR)/parser_check.c \
+	   $(UTL_DIR)/utils.c \
+	   $(UTL_DIR)/free_split.c
+
+OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+# ============================================================================ #
+#                                   LIBRARIES                                  #
+# ============================================================================ #
+
+# Libft
+LIBFT_DIR = libft
+LIBFT = $(LIBFT_DIR)/libft.a
+LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
+
+# MiniLibX Linux
+# MLX_DIR = minilibx-linux
+# MLX = $(MLX_DIR)/libmlx.a
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
+
+# MiniLibX MacOS
+MLX_DIR = mlx
+MLX = $(MLX_DIR)/libmlx.a
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+
+# ============================================================================ #
+#                                   COMPILATION                                #
+# ============================================================================ #
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g3 -DGL_SILENCE_DEPRECATION
+INCLUDES = -I$(INC_DIR) -I$(LIBFT_DIR) -I$(MLX_DIR)
+
+# ============================================================================ #
+#                                   RULES                                      #
+# ============================================================================ #
 
 all: $(NAME)
 
-$(NAME): $(LIBFT_A) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT_A) -o $(NAME)
+# Create object directory structure
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)/execution
+	@mkdir -p $(OBJ_DIR)/parser
+	@mkdir -p $(OBJ_DIR)/utils
 
-bonus: all
+# Compile object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "$(BLUE)Compiling $<...$(RESET)"
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# Build libraries
+$(LIBFT):
+	@echo "$(YELLOW)Building libft...$(RESET)"
+	@make -C $(LIBFT_DIR) --no-print-directory
 
-$(LIBFT_A):
-	$(MAKE) -C $(LIBFT_DIR)
+# Update the MLX build message to match macOS
+$(MLX):
+	@echo "$(YELLOW)Building minilibx-opengl...$(RESET)"
+	@make -C $(MLX_DIR) --no-print-directory
 
+# Link executable
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
+	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_FLAGS) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)✓ $(NAME) created successfully!$(RESET)"
+
+# Clean object files
 clean:
-	$(MAKE) -C $(LIBFT_DIR) clean
-	rm -f $(OBJS)
+	@echo "$(RED)Cleaning object files...$(RESET)"
+	@make clean -C $(LIBFT_DIR) --no-print-directory
+	@make clean -C $(MLX_DIR) --no-print-directory 2>/dev/null || true
+	@rm -rf $(OBJ_DIR)
+	@echo "$(RED)✓ Object files removed$(RESET)"
 
+# Full clean
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	@echo "$(RED)Cleaning executables and libraries...$(RESET)"
+	@make fclean -C $(LIBFT_DIR) --no-print-directory
+	@rm -f $(NAME)
+	@echo "$(RED)✓ All cleaned$(RESET)"
 
+# Rebuild everything
 re: fclean all
+
+# Run the program with a test map
+run: $(NAME)
+	@echo "$(BLUE)Running $(NAME)...$(RESET)"
+	@./$(NAME) $(MAPS_DIR)/test.cub
+
+# Update valgrind rule for macOS (use leaks instead)
+valgrind: $(NAME)
+	@echo "$(BLUE)Running memory leak check...$(RESET)"
+	@leaks --atExit -- ./$(NAME) $(MAPS_DIR)/test.cub
+
+# Show help
+help:
+	@echo "$(GREEN)Available targets:$(RESET)"
+	@echo "  $(YELLOW)all$(RESET)      - Build the project"
+	@echo "  $(YELLOW)clean$(RESET)    - Remove object files"
+	@echo "  $(YELLOW)fclean$(RESET)   - Remove object files and executable"
+	@echo "  $(YELLOW)re$(RESET)       - Rebuild everything"
+	@echo "  $(YELLOW)run$(RESET)      - Run the program with test map"
+	@echo "  $(YELLOW)valgrind$(RESET) - Run with valgrind"
+	@echo "  $(YELLOW)help$(RESET)     - Show this help message"
+
+# ============================================================================ #
+#                                   PHONY                                      #
+# ============================================================================ #
+
+.PHONY: all clean fclean re run valgrind help

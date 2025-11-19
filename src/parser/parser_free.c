@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 18:28:08 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/02 15:06:15 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/08 17:30:30 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../../include/cub3D.h"
 
 void free_scene(t_scene *scene)
 {

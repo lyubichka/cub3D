@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:16:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/13 21:48:44 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 17:11:24 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

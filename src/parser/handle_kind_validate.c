@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_kind_validate.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 15:09:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/16 15:11:58 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 20:46:49 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,24 @@ int handle_kind_result(int kind, char *trim)
     return (0);
 }
 
-// Валидация после окончания прохода по заголовку
+// // Валидация после окончания прохода по заголовку
+// void validate_after_header(t_hdr_ctx *ctx)
+// {
+//     if (ctx->map_start == -1)
+//     {
+//         free_split(ctx->lines);
+//         print_error("Map section not found");
+//     }
+//     // По требованиям из темы: обязательны NO, SO, WE, EA, F, C.
+//     // R и S не обязательны.
+//     if (!ctx->seen_no || !ctx->seen_so || !ctx->seen_we
+//         || !ctx->seen_ea || !ctx->seen_f || !ctx->seen_c)
+//     {
+//         free_split(ctx->lines);
+//         print_error("Missing one or more directives before map");
+//     }
+// }
+
 void validate_after_header(t_hdr_ctx *ctx)
 {
     if (ctx->map_start == -1)
@@ -35,8 +52,13 @@ void validate_after_header(t_hdr_ctx *ctx)
         free_split(ctx->lines);
         print_error("Map section not found");
     }
-    // По требованиям из темы: обязательны NO, SO, WE, EA, F, C.
-    // R и S не обязательны.
+    
+    // DEBUG: Print which directives were found
+    printf("Debug - Directives found:\n");
+    printf("NO: %d, SO: %d, WE: %d, EA: %d\n", 
+           ctx->seen_no, ctx->seen_so, ctx->seen_we, ctx->seen_ea);
+    printf("F: %d, C: %d\n", ctx->seen_f, ctx->seen_c);
+    
     if (!ctx->seen_no || !ctx->seen_so || !ctx->seen_we
         || !ctx->seen_ea || !ctx->seen_f || !ctx->seen_c)
     {

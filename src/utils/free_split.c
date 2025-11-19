@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 20:27:46 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/10/30 16:59:24 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 20:07:46 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/cub3D.h"
+#include "../../include/cub3D.h"
 
 void free_split(char **parts)
 {

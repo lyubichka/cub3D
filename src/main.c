@@ -30,9 +30,7 @@ int main(int argc, char **argv)
 		else
 			print_error("Second argument must be '--save' if present");
 	}
-
 	scene = parse_scene(argv[1], save_flag);
-
 	/* run_engine запустит графику: если save_flag==1 — сохранит bmp и выйдет */
 	run_engine(scene);
 	free_scene(scene);

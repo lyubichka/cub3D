@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:24:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/17 12:03:29 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/18 17:13:27 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
