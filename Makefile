@@ -6,7 +6,7 @@
 #    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2025/11/19 02:09:48 by haiqbal          ###   ########.fr        #
+#    Updated: 2025/11/19 13:46:22 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,8 @@ OBJ_DIR = obj
 INC_DIR = include
 
 EXEC_DIR = $(SRC_DIR)/execution
+PARS_DIR = $(SRC_DIR)/parser
+UTL_DIR = $(SRC_DIR)/utils
 
 # ============================================================================ #
 #                                   SOURCE FILES                               #
@@ -42,12 +44,28 @@ EXEC_DIR = $(SRC_DIR)/execution
 
 SRCS = $(SRC_DIR)/main.c \
 	   $(EXEC_DIR)/execution.c \
-	   $(EXEC_DIR)/graphics.c \
 	   $(EXEC_DIR)/render_utils.c \
 	   $(EXEC_DIR)/rendering.c \
 	   $(EXEC_DIR)/init_player.c \
 	   $(EXEC_DIR)/keys_n_movement.c \
-	   $(EXEC_DIR)/utils1.c 
+	   $(EXEC_DIR)/utils1.c \
+	   $(EXEC_DIR)/graphics.c \
+	   $(PARS_DIR)/dup_or_parse.c \
+	   $(PARS_DIR)/handle_kind_validate.c \
+	   $(PARS_DIR)/handle_so_no_we_ea_s.c \
+	   $(PARS_DIR)/handle.c \
+	   $(PARS_DIR)/parse_color.c \
+	   $(PARS_DIR)/parse_header_till_map.c \
+	   $(PARS_DIR)/parse_map.c \
+	   $(PARS_DIR)/parse_read.c \
+	   $(PARS_DIR)/parse_resolution.c \
+	   $(PARS_DIR)/parse_rgb.c \
+	   $(PARS_DIR)/parse_texture.c \
+	   $(PARS_DIR)/parse_scene.c \
+	   $(PARS_DIR)/parser_free.c \
+	   $(PARS_DIR)/parser_check.c \
+	   $(UTL_DIR)/utils.c \
+	   $(UTL_DIR)/free_split.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
@@ -88,6 +106,8 @@ all: $(NAME)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 	@mkdir -p $(OBJ_DIR)/execution
+	@mkdir -p $(OBJ_DIR)/parser
+	@mkdir -p $(OBJ_DIR)/utils
 
 # Compile object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)

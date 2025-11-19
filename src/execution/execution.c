@@ -6,19 +6,11 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 02:07:10 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 13:49:20 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
-
-void print_error(const char *msg)
-{
-	ft_putstr_fd("Error\n", 2);
-	ft_putstr_fd((char *)msg, 2);
-	ft_putstr_fd("\n", 2);
-	exit(1);
-}
 
 void run_engine(t_scene *scene)
 {
