@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 13:12:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 21:14:34 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 12:53:20 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,7 @@ static void parse_color_line(char *line, char kind, t_scene *scene)
         free_split(comma);
         print_error("Invalid color format (expected r,g,b)");
     }
-    
     parse_rgb(comma, rgb);
-    free_split(comma);
     apply_color(kind, rgb, scene);
 }
 

@@ -6,7 +6,7 @@
 /*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:37:49 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/17 12:01:26 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/19 12:35:12 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void init_scene_defaults(t_scene *scene)
 {
-    scene->screen_width = 0;
-    scene->screen_height = 0;
+    scene->screen_width = 800;
+    scene->screen_height = 600;
     scene->textures.north = NULL;
     scene->textures.south = NULL;
     scene->textures.west = NULL;
