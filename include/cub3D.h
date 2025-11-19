@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/19 00:41:30 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 02:09:08 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define KEY_A      0     /* A */
 # define KEY_S      1     /* S */
 # define KEY_D      2     /* D */
-# define KEY_LEFT   123   /* Left arrow */
-# define KEY_RIGHT  124   /* Right arrow */
+# define KEY_RIGHT  123   /* Right arrow */
+# define KEY_LEFT   124   /* Left arrow */
 # define KEY_ESC    53    /* Escape */
 
 // structure for texture paths
@@ -126,6 +126,15 @@ typedef struct s_map_build_ctx
     t_scene *scene;
 }   t_map_build_ctx;
 
+// structure for image data
+typedef struct s_image {
+	void    *img;
+	char    *addr;
+	int     bpp;
+	int     line_len;
+	int     endian;
+} t_image;
+
 // main structure for the cub3D program
 typedef struct s_cub3d
 {
@@ -133,16 +142,8 @@ typedef struct s_cub3d
 	void	*win;
 	t_scene	scene;
 	t_keys	keys;
+	t_image	img;
 }	t_cub3d;
-
-// structure for image data
-typedef struct s_image {
-    void    *img;
-    char    *addr;
-    int     bpp;
-    int     line_len;
-    int     endian;
-} t_image;
 
 // struct for ray
 typedef struct s_ray
@@ -166,45 +167,49 @@ typedef struct s_ray
 }	t_ray;
 
 
-// functions for parser
-t_scene	*parse_scene(const char *file_path, bool save_flag);
-void	free_scene(t_scene *scene);
-void	parse_resolution(char *line, t_scene *scene);
-void	parse_texture(char *line, t_scene *scene);
-void	parse_color(char *line, t_scene *scene);
-void    parse_rgb(char **parts, int out[3]);
-void	parse_map(char **lines, int map_start, t_scene *scene);
-void	validate_map(t_map *map);
-int		is_number_str(const char *s);
+// // functions for parser
+// t_scene	*parse_scene(const char *file_path, bool save_flag);
+// void	free_scene(t_scene *scene);
+// void	parse_resolution(char *line, t_scene *scene);
+// void	parse_texture(char *line, t_scene *scene);
+// void	parse_color(char *line, t_scene *scene);
+// void    parse_rgb(char **parts, int out[3]);
+// void	parse_map(char **lines, int map_start, t_scene *scene);
+// void	validate_map(t_map *map);
+// int		is_number_str(const char *s);
 
-// helpers used by parser
-t_scene *init_scene(bool save_flag);
-char   **read_lines_from_path(const char *path);
-int      parse_header_until_map(char **lines, t_scene *scene);
-int      is_map_line(const char *s);
-void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
-void     print_error(const char *msg);
-void	free_split(char **arr);
-int		handle_kind_result(int kind, char *trim);
-void	validate_after_header(t_hdr_ctx *ctx);
-int		get_max_width(char **lines, int start, int end);
-void	check_top_bottom_borders(t_scene *scene);
-void	check_left_right_borders(t_scene *scene);
-void	check_interior_cells(t_scene *scene);
-int		is_player(char c);
+// // helpers used by parser
+// t_scene *init_scene(bool save_flag);
+// char   **read_lines_from_path(const char *path);
+// int      parse_header_until_map(char **lines, t_scene *scene);
+// int      is_map_line(const char *s);
+// void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
+// void     print_error(const char *msg);
+// void	free_split(char **arr);
+// int		handle_kind_result(int kind, char *trim);
+// void	validate_after_header(t_hdr_ctx *ctx);
+// int		get_max_width(char **lines, int start, int end);
+// void	check_top_bottom_borders(t_scene *scene);
+// void	check_left_right_borders(t_scene *scene);
+// void	check_interior_cells(t_scene *scene);
+// int		is_player(char c);
 
 
-/* cross-file header handling helpers */
-void     dup_or_parse_texture(t_hdr_ctx *ctx, char *trim, bool *seen,
-                              const char *dup_msg);
-void     dup_or_parse_resolution(t_hdr_ctx *ctx, char *trim, bool *seen);
-void     dup_or_parse_color(t_hdr_ctx *ctx, char *trim, bool *seen,
-                            const char *dup_msg);
-int      handle_no(t_hdr_ctx *ctx, char *trim);
-int      handle_so(t_hdr_ctx *ctx, char *trim);
-int      handle_we(t_hdr_ctx *ctx, char *trim);
-int      handle_ea(t_hdr_ctx *ctx, char *trim);
-int      handle_s(t_hdr_ctx *ctx, char *trim);
+// /* cross-file header handling helpers */
+// void     dup_or_parse_texture(t_hdr_ctx *ctx, char *trim, bool *seen,
+//                               const char *dup_msg);
+// void     dup_or_parse_resolution(t_hdr_ctx *ctx, char *trim, bool *seen);
+// void     dup_or_parse_color(t_hdr_ctx *ctx, char *trim, bool *seen,
+//                             const char *dup_msg);
+// int      handle_no(t_hdr_ctx *ctx, char *trim);
+// int      handle_so(t_hdr_ctx *ctx, char *trim);
+// int      handle_we(t_hdr_ctx *ctx, char *trim);
+// int      handle_ea(t_hdr_ctx *ctx, char *trim);
+// int      handle_s(t_hdr_ctx *ctx, char *trim);
+
+t_scene *create_test_scene(void);
+void	free_test_scene(t_scene *scene);
+
 
 // execution
 void	run_engine(t_scene *scene);
@@ -230,6 +235,10 @@ void	init_player(t_scene *scene);
 // utility functions
 void	print_error(const char *msg);
 int		handle_close(void *param);
+
+// graphics functions
+
+void	init_graphics(t_cub3d *cub);
 
 
 #endif
