@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 20:18:55 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 20:41:24 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,19 @@
 # define KEY_LEFT   123   /* Left arrow */
 # define KEY_RIGHT  124   /* Right arrow */
 # define KEY_ESC    53    /* Escape */
+
+// texture identifiers
+# define TEX_NORTH 0
+# define TEX_SOUTH 1
+# define TEX_EAST  2
+# define TEX_WEST  3
+# define TEX_COUNT 4
+
+// minimap colors
+#define MINIMAP_BG     0x202020
+#define MINIMAP_WALL   0xFFFFFF
+#define MINIMAP_PLAYER 0xFF0000
+#define MINIMAP_DIR    0x00FF00
 
 // structure for texture paths
 typedef struct s_textures
@@ -126,6 +139,17 @@ typedef struct s_map_build_ctx
     t_scene *scene;
 }   t_map_build_ctx;
 
+// structure for image data
+typedef struct s_image {
+	void    *img;
+	char    *addr;
+	int     bpp;
+	int     line_len;
+	int     endian;
+	int		width;
+	int		height;
+} t_image;
+
 // main structure for the cub3D program
 typedef struct s_cub3d
 {
@@ -133,16 +157,9 @@ typedef struct s_cub3d
 	void	*win;
 	t_scene	scene;
 	t_keys	keys;
+	t_image	img;
+	t_image	textures[TEX_COUNT];
 }	t_cub3d;
-
-// structure for image data
-typedef struct s_image {
-    void    *img;
-    char    *addr;
-    int     bpp;
-    int     line_len;
-    int     endian;
-} t_image;
 
 // struct for ray
 typedef struct s_ray
@@ -174,7 +191,6 @@ void	parse_texture(char *line, t_scene *scene);
 void	parse_color(char *line, t_scene *scene);
 void    parse_rgb(char **parts, int out[3]);
 void	parse_map(char **lines, int map_start, t_scene *scene);
-void	validate_map(t_map *map);
 int		is_number_str(const char *s);
 
 // helpers used by parser
@@ -184,7 +200,6 @@ int      parse_header_until_map(char **lines, t_scene *scene);
 int      is_map_line(const char *s);
 void     handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
 void     print_error(const char *msg);
-// void     run_engine(t_scene *scene);
 void	free_split(char **arr);
 int		handle_kind_result(int kind, char *trim);
 void	validate_after_header(t_hdr_ctx *ctx);
@@ -209,6 +224,7 @@ int      handle_s(t_hdr_ctx *ctx, char *trim);
 
 // execution
 void	run_engine(t_scene *scene);
+int		frame_loop(void *param);
 
 // functions for rendering
 void	render_scene(t_cub3d *cub);
@@ -217,13 +233,28 @@ void	put_pixel(t_image *img, int x, int y, int color);
 void	compute_ray(t_cub3d *cub, int x, t_ray *ray);
 void	perform_dda(t_cub3d *cub, t_ray *ray);
 void	compute_wall_height(t_cub3d *cub, t_ray *ray);
-void	draw_vertical_stripe(t_image *img, t_cub3d *cub, int x, t_ray *ray);
+void	draw_vertical_stripe_textured(t_image *img, t_cub3d *cub, int x, t_ray *ray);
+int		save_bmp_file(t_image *img, int width, int height, const char *filename);
+int		save_mode_render_and_write(t_scene *scene, const char *out_filename);
+
+// key handling functions
+int		key_press(int keycode, void *param);
+int		key_release(int keycode, void *param);
+void	handle_keys(t_cub3d *cub);
 
 // functions for player
 void	init_player(t_scene *scene);
 
 // utility functions
 void	print_error(const char *msg);
+int		handle_close(void *param);
+
+// graphics functions
+void	init_graphics(t_cub3d *cub);
+void	load_textures(t_cub3d *cub);
+void	free_textures(t_cub3d *cub);
+int		get_tex_color(t_image *tex, int tx, int ty);
+void	draw_minimap(t_cub3d *cub, t_image *img);
 
 #endif
 

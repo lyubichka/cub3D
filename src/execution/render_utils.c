@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:41:14 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 00:24:13 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/19 14:28:12 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,26 @@ void	put_pixel(t_image *img, int x, int y, int color)
 	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
 	*(unsigned int *)dst = color;
 }
+
+/* read a pixel (tx,ty) from texture `tex` and return 0xRRGGBB int */
+int get_tex_color(t_image *tex, int tx, int ty)
+{
+	char *pixel;
+	unsigned int color;
+
+	/* clamp tx/ty just in case */
+	if (tx < 0)
+		tx = 0;
+	if (tx >= tex->width)
+		tx = tex->width - 1;
+	if (ty < 0)
+		ty = 0;
+	if (ty >= tex->height)
+		ty = tex->height - 1;
+
+	pixel = tex->addr + (ty * tex->line_len + tx * (tex->bpp / 8));
+	color = *(unsigned int *)pixel;
+	return ((int)color);
+}
+
 

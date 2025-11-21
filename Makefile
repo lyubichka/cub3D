@@ -6,7 +6,7 @@
 #    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2025/11/19 00:23:07 by haiqbal          ###   ########.fr        #
+#    Updated: 2025/11/19 21:02:57 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ OBJ_DIR = obj
 INC_DIR = include
 
 EXEC_DIR = $(SRC_DIR)/execution
-# MAPS_DIR = $(SRC_DIR)/maps
 PARS_DIR = $(SRC_DIR)/parser
 UTL_DIR = $(SRC_DIR)/utils
 
@@ -48,6 +47,13 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(EXEC_DIR)/render_utils.c \
 	   $(EXEC_DIR)/rendering.c \
 	   $(EXEC_DIR)/init_player.c \
+	   $(EXEC_DIR)/keys_n_movement.c \
+	   $(EXEC_DIR)/utils1.c \
+	   $(EXEC_DIR)/graphics.c \
+	   $(EXEC_DIR)/textures.c \
+	   $(EXEC_DIR)/save.c \
+	   $(EXEC_DIR)/save2.c \
+	   $(EXEC_DIR)/minimap.c \
 	   $(PARS_DIR)/dup_or_parse.c \
 	   $(PARS_DIR)/handle_kind_validate.c \
 	   $(PARS_DIR)/handle_so_no_we_ea_s.c \
