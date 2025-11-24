@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:40:16 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 14:25:36 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:22:02 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int handle_close(void *param)
 	cub = (t_cub3d *)param;
 
 	free_textures(cub);
-
+	free_scene(&cub->scene);
 	/* destroy persistent image and window */
 	if (cub->img.img)
 		mlx_destroy_image(cub->mlx, cub->img.img);

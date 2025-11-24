@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/23 18:53:19 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:06:26 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ void run_engine(t_scene *scene)
 
 	/* copy scene into cub->scene (or assign pointer if you prefer) */
 	cub->scene = *scene;
+	free(scene); /* free original scene if copied */
 	ft_bzero(&cub->keys, sizeof(t_keys)); /* clear key state */
-
-	/* init player data from scene */
-	init_player(&cub->scene);
 
 	/* initialize MLX, window and the persistent image */
 	init_graphics(cub);
@@ -41,7 +39,6 @@ void run_engine(t_scene *scene)
 
 	/* function will not reach here typically; cleanup done in handle_close */
 }
-
 
 /* this is called by mlx_loop_hook repeatedly */
 int frame_loop(void *param)

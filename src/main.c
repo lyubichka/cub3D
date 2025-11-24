@@ -35,14 +35,13 @@ int main(int argc, char **argv)
 	{
 		if (save_mode_render_and_write(scene, "output.bmp") != 0)
 		{
-			free_scene(scene);
+			free_full_scene(scene);
 			print_error("Failed to save BMP file");
 		}
-		free_scene(scene);
+		free_full_scene(scene);
 		return (0);
 	}
 	else
-	run_engine(scene);
-	free_scene(scene);
+		run_engine(scene);
 	return (0);
 }

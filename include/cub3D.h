@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/23 17:17:46 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:44:36 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ typedef struct s_ray
 // functions for parser
 t_scene	*parse_scene(const char *file_path, bool save_flag);
 void	free_scene(t_scene *scene);
+void	free_full_scene(t_scene *scene);
 void	parse_resolution(char *line, t_scene *scene);
 void	parse_texture(char *line, t_scene *scene);
 void	parse_color(char *line, t_scene *scene);
