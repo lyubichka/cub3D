@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
+#    By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2025/11/19 21:02:57 by haiqbal          ###   ########.fr        #
+#    Updated: 2025/11/23 16:53:56 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,14 +83,14 @@ LIBFT = $(LIBFT_DIR)/libft.a
 LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
 
 # MiniLibX Linux
-# MLX_DIR = minilibx-linux
-# MLX = $(MLX_DIR)/libmlx.a
-# MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
-
-# MiniLibX MacOS
 MLX_DIR = mlx
 MLX = $(MLX_DIR)/libmlx.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm
+
+# MiniLibX MacOS (not used on WSL)
+# MLX_DIR = minilibx_opengl
+# MLX = $(MLX_DIR)/libmlx.a
+# MLX_FLAGS = -L$(MLX_DIR) -lmlx -framework OpenGL -framework AppKit
 
 # ============================================================================ #
 #                                   COMPILATION                                #
@@ -124,9 +124,9 @@ $(LIBFT):
 	@echo "$(YELLOW)Building libft...$(RESET)"
 	@make -C $(LIBFT_DIR) --no-print-directory
 
-# Update the MLX build message to match macOS
+# Build MiniLibX
 $(MLX):
-	@echo "$(YELLOW)Building minilibx-opengl...$(RESET)"
+	@echo "$(YELLOW)Building minilibx-linux...$(RESET)"
 	@make -C $(MLX_DIR) --no-print-directory
 
 # Link executable
@@ -158,10 +158,10 @@ run: $(NAME)
 	@echo "$(BLUE)Running $(NAME)...$(RESET)"
 	@./$(NAME) $(MAPS_DIR)/test.cub
 
-# Update valgrind rule for macOS (use leaks instead)
+# Memory leak check with valgrind
 valgrind: $(NAME)
 	@echo "$(BLUE)Running memory leak check...$(RESET)"
-	@leaks --atExit -- ./$(NAME) $(MAPS_DIR)/test.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) $(MAPS_DIR)/test.cub
 
 # Show help
 help:

@@ -30,9 +30,18 @@ int main(int argc, char **argv)
 		else
 			print_error("Second argument must be '--save' if present");
 	}
-	scene = parse_scene(argv[1], save_flag);
-	init_player(scene);          /* set player.pos/dir/plane based on map.player_* */
-	/* run_engine запустит графику: если save_flag==1 — сохранит bmp и выйдет */
+	scene = parse_scene(argv[1], save_flag);          /* set player.pos/dir/plane based on map.player_* */
+	if (save_flag)
+	{
+		if (save_mode_render_and_write(scene, "output.bmp") != 0)
+		{
+			free_scene(scene);
+			print_error("Failed to save BMP file");
+		}
+		free_scene(scene);
+		return (0);
+	}
+	else
 	run_engine(scene);
 	free_scene(scene);
 	return (0);

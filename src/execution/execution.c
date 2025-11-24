@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 19:26:03 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/23 18:53:19 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,6 @@ void render_scene(t_cub3d *cub)
 	int		x;
 	int		screen_w;
 	int		screen_h;
-	double	inv_width;
-	int		half_h;
 
 	/* use persistent image from cub */
 	img = &cub->img;
@@ -70,10 +68,6 @@ void render_scene(t_cub3d *cub)
 
 	/* clear image buffer once per frame (fast) */
 	ft_bzero(img->addr, img->line_len * screen_h);
-
-	/* precompute some values used inside the loop */
-	inv_width = 1.0 / (double)screen_w;
-	half_h = screen_h / 2;
 
 	x = 0;
 	while (x < screen_w)
@@ -94,5 +88,6 @@ void render_scene(t_cub3d *cub)
 	}
 	draw_minimap(cub, &cub->img);
 	/* draw the persistent image to the window; do NOT destroy the image */
-	mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
+	if (cub->win)
+    mlx_put_image_to_window(cub->mlx, cub->win, cub->img.img, 0, 0);
 }
