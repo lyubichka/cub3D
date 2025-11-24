@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:16:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 17:11:24 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:10:40 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 #include <fcntl.h>
 #include "../../libft/get_next_line.h"
-// Первый проход: посчитать строки в файле
+
 static int count_file_lines(const char *path)
 {
     int fd;
@@ -72,7 +72,6 @@ static void read_lines(const char *path, char **lines, int count)
     lines[i] = NULL;
 }
 
-// Второй проход: выделить массив точного размера и заполнить
 char **read_lines_from_path(const char *path)
 {
     int count;

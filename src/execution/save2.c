@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 20:16:29 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 20:32:59 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/23 21:33:24 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static int prepare_offscreen_cub(t_cub3d *cub, t_scene *scene)
 		return (-1);
 	}
 	cub->win = NULL; /* no window for save mode */
+	/* в offscreen-режиме тоже нужны текстуры для рендера */
+	load_textures(cub);
 	init_player(&cub->scene);
 	return (0);
 }
@@ -44,6 +46,8 @@ static int create_offscreen_image(t_cub3d *cub)
 /* cleanup offscreen image and mlx references */
 static void cleanup_offscreen(t_cub3d *cub)
 {
+	/* сначала освобождаем текстуры */
+	free_textures(cub);
 	if (cub->img.img)
 		mlx_destroy_image(cub->mlx, cub->img.img);
 	/* Some MLX implementations may require additional cleanup; skip exit here */

@@ -32,7 +32,15 @@ int main(int argc, char **argv)
 	}
 	scene = parse_scene(argv[1], save_flag);
 	init_player(scene);          /* set player.pos/dir/plane based on map.player_* */
-	/* run_engine запустит графику: если save_flag==1 — сохранит bmp и выйдет */
+	/* если указан --save, рендерим один кадр в offscreen-изображение и пишем BMP */
+	if (save_flag)
+	{
+		if (save_mode_render_and_write(scene, "screenshot.bmp") != 0)
+			print_error("Failed to save BMP");
+		free_scene(scene);
+		return (0);
+	}
+	/* обычный режим: запускаем графический движок с окном */
 	run_engine(scene);
 	free_scene(scene);
 	return (0);

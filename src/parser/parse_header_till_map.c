@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_header_till_map.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:21:38 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 17:13:03 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 13:11:49 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-// Проверка: строка состоит только из допустимых символов карты (' ', '0', '1', 'N', 'S', 'E', 'W')
 int is_map_line(const char *s)
 {
     int i = 0;
@@ -31,7 +30,6 @@ int is_map_line(const char *s)
     return 1;
 }
 
-// Обработка одной строки заголовка; возвращает следующий индекс или -1 для break
 static int decide_line_kind(t_hdr_ctx *ctx, int i, char *trim)
 {
     int next_i;

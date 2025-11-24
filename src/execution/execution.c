@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 19:26:03 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/23 17:53:51 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,26 @@
 
 void run_engine(t_scene *scene)
 {
-	t_cub3d *cub;
+	t_cub3d cub;
 
-	cub = malloc(sizeof(t_cub3d));
-	if (!cub)
-		print_error("malloc failed");
-
-	/* copy scene into cub->scene (or assign pointer if you prefer) */
-	cub->scene = *scene;
-	ft_bzero(&cub->keys, sizeof(t_keys)); /* clear key state */
+	/* copy parsed scene into local cub instance */
+	cub.scene = *scene;
+	ft_bzero(&cub.keys, sizeof(t_keys)); /* clear key state */
 
 	/* init player data from scene */
-	init_player(&cub->scene);
+	init_player(&cub.scene);
 
 	/* initialize MLX, window and the persistent image */
-	init_graphics(cub);
+	init_graphics(&cub);
 
 	/* register hooks */
-	mlx_hook(cub->win, 2, 1L << 0, key_press, cub);
-	mlx_hook(cub->win, 3, 1L << 1, key_release, cub);
-	mlx_hook(cub->win, 17, 0, handle_close, cub);
-	mlx_loop_hook(cub->mlx, frame_loop, cub);
+	mlx_hook(cub.win, 2, 1L << 0, key_press, &cub);
+	mlx_hook(cub.win, 3, 1L << 1, key_release, &cub);
+	mlx_hook(cub.win, 17, 0, handle_close, &cub);
+	mlx_loop_hook(cub.mlx, frame_loop, &cub);
 
 	/* enter loop */
-	mlx_loop(cub->mlx);
+	mlx_loop(cub.mlx);
 
 	/* function will not reach here typically; cleanup done in handle_close */
 }
@@ -60,8 +56,8 @@ void render_scene(t_cub3d *cub)
 	int		x;
 	int		screen_w;
 	int		screen_h;
-	double	inv_width;
-	int		half_h;
+	// double	inv_width;
+	// int		half_h;
 
 	/* use persistent image from cub */
 	img = &cub->img;
@@ -71,9 +67,9 @@ void render_scene(t_cub3d *cub)
 	/* clear image buffer once per frame (fast) */
 	ft_bzero(img->addr, img->line_len * screen_h);
 
-	/* precompute some values used inside the loop */
-	inv_width = 1.0 / (double)screen_w;
-	half_h = screen_h / 2;
+	// /* precompute some values used inside the loop */
+	// inv_width = 1.0 / (double)screen_w;
+	// half_h = screen_h / 2;
 
 	x = 0;
 	while (x < screen_w)
@@ -93,6 +89,7 @@ void render_scene(t_cub3d *cub)
 		x++;
 	}
 	draw_minimap(cub, &cub->img);
-	/* draw the persistent image to the window; do NOT destroy the image */
-	mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
+	/* в offscreen save-режиме окна нет, поэтому не рисуем в него */
+	if (cub->win)
+		mlx_put_image_to_window(cub->mlx, cub->win, img->img, 0, 0);
 }
