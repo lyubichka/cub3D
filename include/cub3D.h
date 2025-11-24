@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/24 13:44:36 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:12:38 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ typedef struct s_cub3d
 {
 	void	*mlx;
 	void	*win;
-	t_scene	scene;
+	t_scene	scene;           // local copy used for rendering
 	t_keys	keys;
 	t_image	img;
 	t_image	textures[TEX_COUNT];
@@ -259,25 +259,3 @@ int		get_tex_color(t_image *tex, int tx, int ty);
 void	draw_minimap(t_cub3d *cub, t_image *img);
 
 #endif
-
-
-
-// for you now
-// creates a window using MiniLibX:
-
-// mlx_new_window(scene->screen_width, scene->screen_height, "cub3D");
-
-// Loads textures using the paths:
-// scene->textures.north, south, etc.
-
-// Initializes the player's position:
-// scene->map.player_x, player_y, player_dir.
-
-// Implements movement (WASD, arrows).
-
-// Does raycasting and rendering (one frame).
-
-// Adds the --save flag (if scene->save_bmp == 1).
-
-
-// my main my function will be t_scene *parse_scene(const char *path, bool save_flag);

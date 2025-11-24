@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:41:14 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 14:28:12 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/23 16:52:50 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 */
 void	init_image(void *mlx, t_image *img, int width, int height)
 {
+	if (width <= 0 || height <= 0)
+		print_error("init_image: invalid width/height");
 	img->img = mlx_new_image(mlx, width, height);
 	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_len, &img->endian);
 }

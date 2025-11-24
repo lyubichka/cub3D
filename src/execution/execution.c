@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/24 14:06:26 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:17:50 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void run_engine(t_scene *scene)
 {
-	t_cub3d *cub;
-
-	cub = malloc(sizeof(t_cub3d));
-	if (!cub)
-		print_error("malloc failed");
+	t_cub3d cub;
 
 	/* copy scene into cub->scene (or assign pointer if you prefer) */
 	cub->scene = *scene;
@@ -26,16 +22,16 @@ void run_engine(t_scene *scene)
 	ft_bzero(&cub->keys, sizeof(t_keys)); /* clear key state */
 
 	/* initialize MLX, window and the persistent image */
-	init_graphics(cub);
+	init_graphics(&cub);
 
 	/* register hooks */
-	mlx_hook(cub->win, 2, 1L << 0, key_press, cub);
-	mlx_hook(cub->win, 3, 1L << 1, key_release, cub);
-	mlx_hook(cub->win, 17, 0, handle_close, cub);
-	mlx_loop_hook(cub->mlx, frame_loop, cub);
+	mlx_hook(cub.win, 2, 1L << 0, key_press, &cub);
+	mlx_hook(cub.win, 3, 1L << 1, key_release, &cub);
+	mlx_hook(cub.win, 17, 0, handle_close, &cub);
+	mlx_loop_hook(cub.mlx, frame_loop, &cub);
 
 	/* enter loop */
-	mlx_loop(cub->mlx);
+	mlx_loop(cub.mlx);
 
 	/* function will not reach here typically; cleanup done in handle_close */
 }

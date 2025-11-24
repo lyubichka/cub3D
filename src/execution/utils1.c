@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:40:16 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/24 13:22:02 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/24 14:21:38 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int handle_close(void *param)
 		exit(0);
 	cub = (t_cub3d *)param;
 
+	/* free loaded texture images */
 	free_textures(cub);
 	free_scene(&cub->scene);
 	/* destroy persistent image and window */
@@ -27,12 +28,6 @@ int handle_close(void *param)
 		mlx_destroy_image(cub->mlx, cub->img.img);
 	if (cub->win)
 		mlx_destroy_window(cub->mlx, cub->win);
-
-	/* If you allocated textures or scene strings dynamically, free them here.
-	   If cub->scene is a copy of parsed scene, ensure the original will be freed
-	   or move to pointer-style ownership. For testing you can skip freeing those
-	   until program exit. */
-
 	free(cub);
 	exit(0);
 

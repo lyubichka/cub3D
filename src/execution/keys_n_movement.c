@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_n_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:26:25 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 00:31:04 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/23 16:14:59 by veronikalub      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ int key_press(int keycode, void *param)
 	if (keycode == KEY_RIGHT)
 		cub->keys.right = 1;
 	if (keycode == KEY_ESC)
-	{ 
-		mlx_destroy_window(cub->mlx, cub->win);
-		free(cub);
-		exit(0);
-	}
+		return (handle_close(param));
 	return (0);
 }
 
