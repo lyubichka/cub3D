@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:22:43 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 00:24:06 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 00:34:27 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,5 @@ void	init_player(t_scene *scene)
 {
 	scene->player.pos_x = scene->map.player_x + 0.5;
 	scene->player.pos_y = scene->map.player_y + 0.5;
-
 	set_dir_plane(scene, scene->map.player_dir);
 }

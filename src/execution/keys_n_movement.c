@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys_n_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:26:25 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/23 16:14:59 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/26 00:04:02 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,13 @@ void handle_keys(t_cub3d *cub)
 		newX = cub->scene.player.pos_x + cub->scene.player.dir_x * moveSpeed;
 		newY = cub->scene.player.pos_y + cub->scene.player.dir_y * moveSpeed;
 		/* collision: check separately to avoid corner sticking */
-		if (cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
+		if ((int)newX >= 0 && (int)newX < cub->scene.map.width &&
+			(int)cub->scene.player.pos_y >= 0 && (int)cub->scene.player.pos_y < cub->scene.map.height &&
+			cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
 			cub->scene.player.pos_x = newX;
-		if (cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
+		if ((int)newY >= 0 && (int)newY < cub->scene.map.height &&
+			(int)cub->scene.player.pos_x >= 0 && (int)cub->scene.player.pos_x < cub->scene.map.width &&
+			cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
 			cub->scene.player.pos_y = newY;
 	}
 
@@ -82,9 +86,13 @@ void handle_keys(t_cub3d *cub)
 	{
 		newX = cub->scene.player.pos_x - cub->scene.player.dir_x * moveSpeed;
 		newY = cub->scene.player.pos_y - cub->scene.player.dir_y * moveSpeed;
-		if (cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
+		if ((int)newX >= 0 && (int)newX < cub->scene.map.width &&
+			(int)cub->scene.player.pos_y >= 0 && (int)cub->scene.player.pos_y < cub->scene.map.height &&
+			cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
 			cub->scene.player.pos_x = newX;
-		if (cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
+		if ((int)newY >= 0 && (int)newY < cub->scene.map.height &&
+			(int)cub->scene.player.pos_x >= 0 && (int)cub->scene.player.pos_x < cub->scene.map.width &&
+			cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
 			cub->scene.player.pos_y = newY;
 	}
 
@@ -93,9 +101,13 @@ void handle_keys(t_cub3d *cub)
 	{
 		newX = cub->scene.player.pos_x - cub->scene.player.plane_x * moveSpeed;
 		newY = cub->scene.player.pos_y - cub->scene.player.plane_y * moveSpeed;
-		if (cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
+		if ((int)newX >= 0 && (int)newX < cub->scene.map.width &&
+			(int)cub->scene.player.pos_y >= 0 && (int)cub->scene.player.pos_y < cub->scene.map.height &&
+			cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
 			cub->scene.player.pos_x = newX;
-		if (cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
+		if ((int)newY >= 0 && (int)newY < cub->scene.map.height &&
+			(int)cub->scene.player.pos_x >= 0 && (int)cub->scene.player.pos_x < cub->scene.map.width &&
+			cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
 			cub->scene.player.pos_y = newY;
 	}
 
@@ -104,9 +116,13 @@ void handle_keys(t_cub3d *cub)
 	{
 		newX = cub->scene.player.pos_x + cub->scene.player.plane_x * moveSpeed;
 		newY = cub->scene.player.pos_y + cub->scene.player.plane_y * moveSpeed;
-		if (cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
+		if ((int)newX >= 0 && (int)newX < cub->scene.map.width &&
+			(int)cub->scene.player.pos_y >= 0 && (int)cub->scene.player.pos_y < cub->scene.map.height &&
+			cub->scene.map.grid[(int)cub->scene.player.pos_y][(int)newX] != '1')
 			cub->scene.player.pos_x = newX;
-		if (cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
+		if ((int)newY >= 0 && (int)newY < cub->scene.map.height &&
+			(int)cub->scene.player.pos_x >= 0 && (int)cub->scene.player.pos_x < cub->scene.map.width &&
+			cub->scene.map.grid[(int)newY][(int)cub->scene.player.pos_x] != '1')
 			cub->scene.player.pos_y = newY;
 	}
 

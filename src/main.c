@@ -19,10 +19,7 @@ int main(int argc, char **argv)
 
 	save_flag = false;
 	if (argc < 2 || argc > 3)
-	{
-		write(2, "Error\nwrong number of arguments\n", 33);
-		exit(1);
-	}
+		print_error("wrong number of arguments");
 	if (argc == 3)
 	{
 		if (ft_strncmp(argv[2], "--save", 6) == 0)
@@ -30,7 +27,9 @@ int main(int argc, char **argv)
 		else
 			print_error("Second argument must be '--save' if present");
 	}
-	scene = parse_scene(argv[1], save_flag);          /* set player.pos/dir/plane based on map.player_* */
+	scene = parse_scene(argv[1], save_flag);
+	if (!scene)
+        print_error("failed to parse scene");
 	if (save_flag)
 	{
 		if (save_mode_render_and_write(scene, "output.bmp") != 0)

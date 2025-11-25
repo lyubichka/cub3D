@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/24 14:12:38 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 00:17:46 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,23 @@
 # define MAX_MAP_HEIGHT 100
 # define MAX_MAP_WIDTH  100
 
+// // key codes
+// # define KEY_W      13    /* W */
+// # define KEY_A      0     /* A */
+// # define KEY_S      1     /* S */
+// # define KEY_D      2     /* D */
+// # define KEY_LEFT   123   /* Left arrow */
+// # define KEY_RIGHT  124   /* Right arrow */
+// # define KEY_ESC    53    /* Escape */
+
 // key codes
-# define KEY_W      13    /* W */
-# define KEY_A      0     /* A */
-# define KEY_S      1     /* S */
-# define KEY_D      2     /* D */
-# define KEY_LEFT   123   /* Left arrow */
-# define KEY_RIGHT  124   /* Right arrow */
-# define KEY_ESC    53    /* Escape */
+# define KEY_W      119    /* W */
+# define KEY_A      97     /* A */
+# define KEY_S      115    /* S */
+# define KEY_D      100    /* D */
+# define KEY_LEFT	65363   /* Right arrow */
+# define KEY_RIGHT	65361   /* Left arrow */
+# define KEY_ESC    65307	/* Escape */
 
 // texture identifiers
 # define TEX_NORTH 0
