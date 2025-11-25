@@ -6,15 +6,15 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 00:33:55 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 01:22:20 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-void run_engine(t_scene *scene)
+void	run_engine(t_scene *scene)
 {
-	t_cub3d *cub;
+	t_cub3d	*cub;
 
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
@@ -30,21 +30,23 @@ void run_engine(t_scene *scene)
 	mlx_loop(cub->mlx);
 }
 
-int frame_loop(void *param)
+int	frame_loop(void *param)
 {
-	t_cub3d *cub = (t_cub3d *)param;
+	t_cub3d	*cub;
 
+	cub = (t_cub3d *)param;
 	handle_keys(cub);
 	render_scene(cub);
 	return (0);
 }
 
-void render_scene(t_cub3d *cub)
+void	render_scene(t_cub3d *cub)
 {
-	t_image *img;
-	int x;
-	int screen_w;
-	int screen_h;
+	t_image	*img;
+	int		x;
+	int		screen_w;
+	int		screen_h;
+	t_ray	ray;
 
 	img = &cub->img;
 	screen_w = cub->scene.screen_width;
@@ -53,10 +55,8 @@ void render_scene(t_cub3d *cub)
 	x = 0;
 	while (x < screen_w)
 	{
-		t_ray ray;
 		ft_bzero(&ray, sizeof(t_ray));
 		compute_ray(cub, x, &ray);
-
 		perform_dda(cub, &ray);
 		compute_wall_height(cub, &ray);
 		draw_vertical_stripe_textured(&cub->img, cub, x, &ray);

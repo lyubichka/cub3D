@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: veronikalubickaa <veronikalubickaa@stud    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 00:08:36 by vlyubick          #+#    #+#             */
-/*   Updated: 2025/10/31 00:08:07 by veronikalub      ###   ########.fr       */
+/*   Updated: 2025/11/26 02:59:08 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static size_t	gnl_strlen(const char *s)
 {
-    if (s == NULL)
-        return (0);
-    return (ft_strlen(s));
+	if (s == NULL)
+		return (0);
+	return (ft_strlen(s));
 }
 
 int	findn(char *s)
@@ -35,31 +35,37 @@ int	findn(char *s)
 	return (0);
 }
 
-char	*gnl_strjoin(char *s1, char *s2)
+static void	copy_strings(char *str, char *s1, char *s2, int *lens)
 {
-	int		len1;
-	int		len2;
-	int		i;
-	char	*str;
+	int	i;
+	int	j;
 
-	len1 = (int)gnl_strlen(s1);
-	len2 = (int)gnl_strlen(s2);
-	str = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (i < len1)
+	while (i < lens[0])
 	{
 		str[i] = s1[i];
 		i++;
 	}
-	int j = 0;
-	while (j < len2)
+	j = 0;
+	while (j < lens[1])
 	{
 		str[i + j] = s2[j];
 		j++;
 	}
-	str[len1 + len2] = '\0';
+}
+
+char	*gnl_strjoin(char *s1, char *s2)
+{
+	int		lens[2];
+	char	*str;
+
+	lens[0] = (int)gnl_strlen(s1);
+	lens[1] = (int)gnl_strlen(s2);
+	str = (char *)malloc((lens[0] + lens[1] + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	copy_strings(str, s1, s2, lens);
+	str[lens[0] + lens[1]] = '\0';
 	if (s1)
 		free(s1);
 	return (str);

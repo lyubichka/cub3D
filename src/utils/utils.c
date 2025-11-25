@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:59:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/18 20:17:16 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 02:31:23 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-void print_error(const char *msg)
+void	print_error(const char *msg)
 {
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd((char *)msg, 2);
@@ -22,25 +22,26 @@ void print_error(const char *msg)
 
 int	is_number_str(const char *s)
 {
-    int i;
+	int	i;
 
-    if (!s || !*s)
-        return (0);
-    i = 0;
-    while (s[i])
-    {
-        if (!(s[i] >= '0' && s[i] <= '9'))
-            return (0);
-        i++;
-    }
-    return (1);
+	if (!s || !*s)
+		return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (!(s[i] >= '0' && s[i] <= '9'))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int	get_max_width(char **lines, int start, int end)
 {
-    int	max = 0;
-    int	len;
+	int	max;
+	int	len;
 
+	max = 0;
 	while (start < end)
 	{
 		len = ft_strlen(lines[start]);
@@ -48,10 +49,10 @@ int	get_max_width(char **lines, int start, int end)
 			max = len;
 		start++;
 	}
-	    return (max);
+	return (max);
 }
 
-int is_player(char c)
+int	is_player(char c)
 {
-    return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }

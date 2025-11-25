@@ -6,11 +6,11 @@
 /*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:41:14 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 00:06:58 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 02:12:07 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3D.h"
+#include "../../../include/cub3D.h"
 
 /*
 ** Initializes an image buffer that you can draw into.
@@ -23,7 +23,8 @@ void	init_image(void *mlx, t_image *img, int width, int height)
 	img->img = mlx_new_image(mlx, width, height);
 	if (!img->img)
 		print_error("mlx_new_image failed");
-	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_len, &img->endian);
+	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_len,
+			&img->endian);
 	if (!img->addr)
 		print_error("mlx_get_data_addr failed");
 }
@@ -41,12 +42,11 @@ void	put_pixel(t_image *img, int x, int y, int color)
 }
 
 /* read a pixel (tx,ty) from texture `tex` and return 0xRRGGBB int */
-int get_tex_color(t_image *tex, int tx, int ty)
+int	get_tex_color(t_image *tex, int tx, int ty)
 {
-	char *pixel;
-	unsigned int color;
+	char			*pixel;
+	unsigned int	color;
 
-	/* clamp tx/ty just in case */
 	if (tx < 0)
 		tx = 0;
 	if (tx >= tex->width)
@@ -55,10 +55,7 @@ int get_tex_color(t_image *tex, int tx, int ty)
 		ty = 0;
 	if (ty >= tex->height)
 		ty = tex->height - 1;
-
 	pixel = tex->addr + (ty * tex->line_len + tx * (tex->bpp / 8));
 	color = *(unsigned int *)pixel;
 	return ((int)color);
 }
-
-
