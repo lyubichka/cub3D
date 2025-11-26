@@ -21,17 +21,23 @@ int	save_mode_render_and_write(t_scene *scene, const char *out_filename)
 		return (-1);
 	res = prepare_offscreen_cub(&cub, scene);
 	if (res != 0)
+	{
+		free_scene(&cub.scene);
 		return (-1);
+	}
 	if (create_offscreen_image(&cub) != 0)
 	{
 		if (cub.img.img)
 			mlx_destroy_image(cub.mlx, cub.img.img);
+		cleanup_offscreen(&cub);
+		free_scene(&cub.scene);
 		return (-1);
 	}
 	render_scene(&cub);
 	res = save_bmp_file(&cub.img, cub.scene.screen_width,
 			cub.scene.screen_height, out_filename);
 	cleanup_offscreen(&cub);
+	free_scene(&cub.scene);
 	if (res == 0)
 		return (0);
 	return (-1);

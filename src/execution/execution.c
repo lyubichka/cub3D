@@ -18,8 +18,12 @@ void	run_engine(t_scene *scene)
 
 	cub = malloc(sizeof(t_cub3d));
 	if (!cub)
+	{
+		free_full_scene(scene);
 		print_error("run_engine: malloc failed");
+	}
 	cub->scene = *scene;
+	free(scene);
 	ft_bzero(&cub->keys, sizeof(t_keys));
 	init_player(&cub->scene);
 	init_graphics(cub);
