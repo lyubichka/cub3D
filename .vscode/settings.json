@@ -1,0 +1,14 @@
+{
+	"[c]": {
+		"editor.defaultFormatter": "keyhr.42-c-format",
+		"editor.formatOnSave": true
+	},
+	"42-c-format.path": "/home/hanfas/.local/bin/c_formatter_42",
+	"python.defaultInterpreterPath": "/usr/bin/python3",
+	"files.associations": {
+		"*.h": "c"
+	},
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"files.trimTrailingWhitespace": true
+}

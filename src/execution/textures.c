@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:21:49 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/19 14:22:04 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/26 02:03:28 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,45 @@
 
 static void	load_single_texture(t_cub3d *cub, t_image *tex, const char *path)
 {
-	void *img;
-	int w;
-	int h;
+	void	*img;
+	int		w;
+	int		h;
 
+	if (!path)
+	{
+		ft_putstr_fd("Error: NULL texture path\n", 2);
+		print_error("Texture path is NULL");
+	}
 	img = mlx_xpm_file_to_image(cub->mlx, (char *)path, &w, &h);
 	if (!img)
+	{
+		ft_putstr_fd("Error: Failed to load texture: ", 2);
+		ft_putstr_fd((char *)path, 2);
+		ft_putstr_fd("\n", 2);
 		print_error("Failed to load texture XPM");
-
+	}
 	tex->img = img;
 	tex->addr = mlx_get_data_addr(img, &tex->bpp, &tex->line_len, &tex->endian);
 	tex->width = w;
 	tex->height = h;
 }
 
-/* call this after cub->mlx is initialized and before the render loop */
-void load_textures(t_cub3d *cub)
+void	load_textures(t_cub3d *cub)
 {
-	/* paths come from parsed scene */
-	load_single_texture(cub, &cub->textures[TEX_NORTH], cub->scene.textures.north);
-	load_single_texture(cub, &cub->textures[TEX_SOUTH], cub->scene.textures.south);
-	load_single_texture(cub, &cub->textures[TEX_EAST],  cub->scene.textures.east);
-	load_single_texture(cub, &cub->textures[TEX_WEST],  cub->scene.textures.west);
+	load_single_texture(cub, &cub->textures[TEX_NORTH],
+		cub->scene.textures.north);
+	load_single_texture(cub, &cub->textures[TEX_SOUTH],
+		cub->scene.textures.south);
+	load_single_texture(cub, &cub->textures[TEX_EAST],
+		cub->scene.textures.east);
+	load_single_texture(cub, &cub->textures[TEX_WEST],
+		cub->scene.textures.west);
 }
 
 /* free texture images (call on close) */
-void free_textures(t_cub3d *cub)
+void	free_textures(t_cub3d *cub)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < TEX_COUNT)
@@ -51,4 +62,3 @@ void free_textures(t_cub3d *cub)
 		i++;
 	}
 }
-

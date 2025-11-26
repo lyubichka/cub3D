@@ -1,0 +1,26 @@
+# Compiled executable
+cub3D
+
+# Object files
+*.o
+*.a
+obj/
+
+# Valgrind logs (keep folder structure, ignore logs)
+valgrind_logs/*.log
+valgrind_logs/summary_*.txt
+valgrind_logs/console_*.log
+valgrind_logs/full_*.log
+
+# BMP output files
+*.bmp
+
+# OS files
+.DS_Store
+.vscode/
+*.swp
+*.swo
+*~
+
+# Temp files
+*.tmp
