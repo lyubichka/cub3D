@@ -1,0 +1,6 @@
+{
+   ignore_mlx_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:mlx_*
+}
