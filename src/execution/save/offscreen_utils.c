@@ -30,6 +30,7 @@ int	prepare_offscreen_cub(t_cub3d *cub, t_scene *scene)
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 	{
+		free_scene(&cub->scene);
 		fprintf(stderr, "Error: mlx_init failed\n");
 		return (-1);
 	}

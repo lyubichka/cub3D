@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keys.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:26:25 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 02:13:04 by haiqbal          ###   ########.fr       */
+/*   Updated: 2025/11/28 18:32:56 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	handle_keys(t_cub3d *cub)
 	double	rot_speed;
 
 	move_speed = 0.09;
-	rot_speed = 0.01;
+	rot_speed = 0.05;
 	if (cub->keys.w)
 		move_forward(cub, move_speed);
 	if (cub->keys.s)

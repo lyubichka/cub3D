@@ -18,11 +18,19 @@ void	init_graphics(t_cub3d *cub)
 		print_error("init_graphics: null cub");
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
+	{
+		free_scene(&cub->scene);
+		free(cub);
 		print_error("mlx_init failed");
+	}
 	cub->win = mlx_new_window(cub->mlx, cub->scene.screen_width,
 			cub->scene.screen_height, "cub3D");
 	if (!cub->win)
+	{
+		free_scene(&cub->scene);
+		free(cub);
 		print_error("mlx_new_window failed");
+	}
 	init_image(cub->mlx, &cub->img, cub->scene.screen_width,
 		cub->scene.screen_height);
 	ft_bzero(cub->img.addr, cub->img.line_len * cub->scene.screen_height);
