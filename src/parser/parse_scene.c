@@ -109,6 +109,12 @@ t_scene	*parse_scene(const char *file_path, bool save_flag)
 	scene = init_scene(save_flag);
 	lines = read_lines_from_path(file_path);
 	map_start = parse_header_until_map(lines, scene);
+	if (map_start < 0)
+	{
+		free_split(lines);
+		free_full_scene(scene);
+		print_error("No map found in .cub file");
+	}
 	enforce_map_block_rules(lines, map_start);
 	parse_map(lines, map_start, scene);
 	post_map_and_final_checks(lines, scene);
