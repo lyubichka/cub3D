@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:24:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:37:49 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:37 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static int	try_handle_texture_ids(t_hdr_ctx *ctx, char *trim)
 		handled = handle_we(ctx, trim);
 	if (!handled)
 		handled = handle_ea(ctx, trim);
-	if (!handled)
-		handled = handle_s(ctx, trim);
 	return (handled);
 }
 

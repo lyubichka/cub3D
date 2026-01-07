@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 00:26:25 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/28 18:32:56 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 13:56:25 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	handle_keys(t_cub3d *cub)
 	double	move_speed;
 	double	rot_speed;
 
-	move_speed = 0.09;
-	rot_speed = 0.05;
+	move_speed = 0.05;
+	rot_speed = 0.01;
 	if (cub->keys.w)
 		move_forward(cub, move_speed);
 	if (cub->keys.s)

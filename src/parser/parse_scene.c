@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/29 17:37:49 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:45:30 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:43 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	init_scene_defaults(t_scene *scene)
 	scene->textures.south = NULL;
 	scene->textures.west = NULL;
 	scene->textures.east = NULL;
-	scene->textures.sprite = NULL;
 	scene->colors.floor[0] = 0;
 	scene->colors.floor[1] = 0;
 	scene->colors.floor[2] = 0;

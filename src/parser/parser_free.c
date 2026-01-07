@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 18:28:08 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:47:33 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:44 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_scene(t_scene *scene)
 	free(scene->textures.south);
 	free(scene->textures.west);
 	free(scene->textures.east);
-	free(scene->textures.sprite);
 	if (scene->map.grid)
 	{
 		i = 0;

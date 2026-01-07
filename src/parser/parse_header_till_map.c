@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_header_till_map.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:21:38 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:39:26 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:37 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static void	init_seen_flags(t_hdr_ctx *ctx)
 	ctx->seen_so = false;
 	ctx->seen_we = false;
 	ctx->seen_ea = false;
-	ctx->seen_s = false;
 	ctx->seen_f = false;
 	ctx->seen_c = false;
 }

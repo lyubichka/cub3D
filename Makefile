@@ -6,7 +6,7 @@
 #    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2026/01/02 13:44:35 by haiqbal          ###   ########.fr        #
+#    Updated: 2026/01/02 14:47:07 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(REND_DIR)/draw_stripe.c \
 	   $(PARS_DIR)/dup_or_parse.c \
 	   $(PARS_DIR)/handle_kind_validate.c \
-	   $(PARS_DIR)/handle_so_no_we_ea_s.c \
+	   $(PARS_DIR)/handle_so_no_we_ea.c \
 	   $(PARS_DIR)/handle.c \
 	   $(PARS_DIR)/parse_color.c \
 	   $(PARS_DIR)/parse_header_till_map.c \

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_so_no_we_ea_s.c                             :+:      :+:    :+:   */
+/*   handle_so_no_we_ea.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 15:16:51 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:37:36 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:35 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ int	handle_ea(t_hdr_ctx *ctx, char *trim)
 	{
 		dup_or_parse_texture(ctx, trim, &ctx->seen_ea,
 			"Duplicate EA directive");
-		return (1);
-	}
-	return (0);
-}
-
-int	handle_s(t_hdr_ctx *ctx, char *trim)
-{
-	if (ft_strncmp(trim, "S ", 2) == 0 || ft_strncmp(trim, "S\t", 2) == 0)
-	{
-		dup_or_parse_texture(ctx, trim, &ctx->seen_s, "Duplicate S directive");
 		return (1);
 	}
 	return (0);

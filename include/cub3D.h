@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2026/01/02 13:44:55 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:46 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_textures
 	char			*south;
 	char			*west;
 	char			*east;
-	char			*sprite;
 }					t_textures;
 
 // structure for colors (0-255)
@@ -134,7 +133,6 @@ typedef struct s_hdr_ctx
 	bool			seen_so;
 	bool			seen_we;
 	bool			seen_ea;
-	bool			seen_s;
 	bool			seen_f;
 	bool			seen_c;
 }					t_hdr_ctx;
@@ -314,7 +312,6 @@ int					handle_no(t_hdr_ctx *ctx, char *trim);
 int					handle_so(t_hdr_ctx *ctx, char *trim);
 int					handle_we(t_hdr_ctx *ctx, char *trim);
 int					handle_ea(t_hdr_ctx *ctx, char *trim);
-int					handle_s(t_hdr_ctx *ctx, char *trim);
 
 // execution
 void				run_engine(t_scene *scene);

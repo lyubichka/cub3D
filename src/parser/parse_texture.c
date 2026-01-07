@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:18:11 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:45:34 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/02 14:43:43 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ static void	assign_texture_by_id(t_scene *scene, const char *id, char *trimmed)
 			trimmed);
 	else if (ft_strncmp(id, "EA", 3) == 0)
 		set_texture_path(&scene->textures.east, "Duplicate texture EA",
-			trimmed);
-	else if (ft_strncmp(id, "S", 2) == 0)
-		set_texture_path(&scene->textures.sprite, "Duplicate texture S",
 			trimmed);
 	else
 	{
