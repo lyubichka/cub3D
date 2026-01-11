@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:34:41 by veronikalub       #+#    #+#             */
-/*   Updated: 2026/01/02 14:43:46 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 20:05:09 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_hdr_ctx
 	char			**lines;
 	t_scene			*scene;
 	int				map_start;
+	char			*current_trim;
 	bool			seen_r;
 	bool			seen_no;
 	bool			seen_so;
@@ -279,19 +280,20 @@ t_scene				*parse_scene(const char *file_path, bool save_flag);
 void				free_scene(t_scene *scene);
 void				free_full_scene(t_scene *scene);
 void				parse_resolution(char *line, t_scene *scene);
-void				parse_texture(char *line, t_scene *scene);
-void				parse_color(char *line, t_scene *scene);
-void				parse_rgb(char **parts, int out[3]);
+void				parse_texture(char *line, t_hdr_ctx *ctx);
+void				parse_color(char *line, t_hdr_ctx *ctx);
+void				parse_rgb(char **parts, int out[3], t_hdr_ctx *ctx,
+						char **outer_parts);
 void				parse_map(char **lines, int map_start, t_scene *scene);
 int					is_number_str(const char *s);
 
 // helpers used by parser
 t_scene				*init_scene(bool save_flag);
+void				validate_file_path(const char *file_path);
 char				**read_lines_from_path(const char *path);
 int					parse_header_until_map(char **lines, t_scene *scene);
 int					is_map_line(const char *s);
 void				handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim);
-void				print_error(const char *msg);
 void				free_split(char **arr);
 int					handle_kind_result(int kind, char *trim);
 void				validate_after_header(t_hdr_ctx *ctx);
@@ -364,11 +366,16 @@ void				strafe_right(t_cub3d *cub, double speed);
 void				rotate_left(t_cub3d *cub, double speed);
 void				rotate_right(t_cub3d *cub, double speed);
 
+// collision detection functions
+int					is_clear_tile(t_cub3d *cub, int x, int y);
+int					has_player_space(t_cub3d *cub, double x, double y);
+
 // functions for player
 void				init_player(t_scene *scene);
 
 // utility functions
-void				print_error(const char *msg);
+void				print_error_ctx(const char *msg, t_hdr_ctx *ctx,
+						char **extra);
 int					handle_close(void *param);
 
 // graphics functions

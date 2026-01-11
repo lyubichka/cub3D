@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_read.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:16:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:46:50 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 20:04:22 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	count_file_lines(const char *path)
 	n = 0;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		print_error("Error: Unable to open .cub file");
+		print_error_ctx("Error: Unable to open .cub file", NULL, NULL);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -43,7 +43,8 @@ static char	**malloc_lines(int size)
 		size = 1;
 	lines = (char **)malloc(sizeof(char *) * (size + 1));
 	if (!lines)
-		print_error("Error: Unable to allocate memory for lines");
+		print_error_ctx("Error: Unable to allocate memory for lines", NULL,
+			NULL);
 	return (lines);
 }
 
@@ -57,7 +58,7 @@ static void	read_lines(const char *path, char **lines, int count)
 	i = 0;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		print_error("Error: Unable to open .cub file");
+		print_error_ctx("Error: Unable to open .cub file", NULL, NULL);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -71,6 +72,23 @@ static void	read_lines(const char *path, char **lines, int count)
 	if (count == 0)
 		lines[i++] = ft_strdup("");
 	lines[i] = NULL;
+}
+
+void	validate_file_path(const char *file_path)
+{
+	size_t	len;
+
+	if (!file_path)
+	{
+		print_error_ctx("Error: Invalid file extension. Expected .cub", NULL,
+			NULL);
+	}
+	len = ft_strlen(file_path);
+	if (len < 4 || ft_strncmp(file_path + len - 4, ".cub", 4) != 0)
+	{
+		print_error_ctx("Error: Invalid file extension. Expected .cub", NULL,
+			NULL);
+	}
 }
 
 char	**read_lines_from_path(const char *path)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rgb.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 16:15:39 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:45:25 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 20:00:19 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	trim_parts(char **parts)
 	}
 }
 
-void	parse_rgb(char **parts, int out[3])
+void	parse_rgb(char **parts, int out[3], t_hdr_ctx *ctx, char **outer_parts)
 {
 	int	r;
 	int	g;
@@ -53,7 +53,7 @@ void	parse_rgb(char **parts, int out[3])
 	if (!is_byte(parts[0]) || !is_byte(parts[1]) || !is_byte(parts[2]))
 	{
 		free_split(parts);
-		print_error("Color components must be integers");
+		print_error_ctx("Color components must be integers", ctx, outer_parts);
 	}
 	r = ft_atoi(parts[0]);
 	g = ft_atoi(parts[1]);
@@ -61,7 +61,8 @@ void	parse_rgb(char **parts, int out[3])
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
 	{
 		free_split(parts);
-		print_error("Color components must be in [0,255]");
+		print_error_ctx("Color components must be in [0,255]", ctx,
+			outer_parts);
 	}
 	out[0] = r;
 	out[1] = g;

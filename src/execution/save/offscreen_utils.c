@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   offscreen_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/26 00:00:00 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 02:19:00 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 14:37:39 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	prepare_offscreen_cub(t_cub3d *cub, t_scene *scene)
 	cub->mlx = mlx_init();
 	if (!cub->mlx)
 	{
-		free_scene(&cub->scene);
 		fprintf(stderr, "Error: mlx_init failed\n");
 		return (-1);
 	}
@@ -57,4 +56,9 @@ void	cleanup_offscreen(t_cub3d *cub)
 	free_textures(cub);
 	if (cub->img.img)
 		mlx_destroy_image(cub->mlx, cub->img.img);
+	if (cub->mlx)
+	{
+		mlx_destroy_display(cub->mlx);
+		free(cub->mlx);
+	}
 }

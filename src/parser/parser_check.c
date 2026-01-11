@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 19:33:27 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:46:45 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:52:58 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ static char	get_at(t_scene *scene, int y, int x)
 static void	check_adjacent_spaces(t_scene *scene, int y, int x)
 {
 	if (get_at(scene, y - 1, x) == ' ')
-		print_error("Map has open space adjacent to floor/player");
+		print_error_ctx("Map has open space adjacent to floor/player", NULL,
+			NULL);
 	if (get_at(scene, y + 1, x) == ' ')
-		print_error("Map has open space adjacent to floor/player");
+		print_error_ctx("Map has open space adjacent to floor/player", NULL,
+			NULL);
 	if (get_at(scene, y, x - 1) == ' ')
-		print_error("Map has open space adjacent to floor/player");
+		print_error_ctx("Map has open space adjacent to floor/player", NULL,
+			NULL);
 	if (get_at(scene, y, x + 1) == ' ')
-		print_error("Map has open space adjacent to floor/player");
+		print_error_ctx("Map has open space adjacent to floor/player", NULL,
+			NULL);
 }
 
 void	check_interior_cells(t_scene *scene)
@@ -64,7 +68,7 @@ void	check_top_bottom_borders(t_scene *scene)
 		t = get_at(scene, 0, x);
 		b = get_at(scene, scene->map.height - 1, x);
 		if (t == '0' || is_player(t) || b == '0' || is_player(b))
-			print_error("Map not closed at top/bottom border");
+			print_error_ctx("Map not closed at top/bottom border", NULL, NULL);
 		x++;
 	}
 }
@@ -81,7 +85,7 @@ void	check_left_right_borders(t_scene *scene)
 		l = get_at(scene, y, 0);
 		r = get_at(scene, y, scene->map.width - 1);
 		if (l == '0' || is_player(l) || r == '0' || is_player(r))
-			print_error("Map not closed at left/right border");
+			print_error_ctx("Map not closed at left/right border", NULL, NULL);
 		y++;
 	}
 }

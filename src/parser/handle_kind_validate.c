@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_kind_validate.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 15:09:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:40:15 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:44:18 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,8 @@ int	handle_kind_result(int kind, char *trim)
 void	validate_after_header(t_hdr_ctx *ctx)
 {
 	if (ctx->map_start == -1)
-	{
-		free_split(ctx->lines);
-		print_error("Map section not found");
-	}
-	if (!ctx->seen_r || !ctx->seen_no || !ctx->seen_so || !ctx->seen_we
+		print_error_ctx("Map section not found", ctx, NULL);
+	if (!ctx->seen_no || !ctx->seen_so || !ctx->seen_we
 		|| !ctx->seen_ea || !ctx->seen_f || !ctx->seen_c)
-	{
-		free_split(ctx->lines);
-		print_error("Missing one or more directives before map");
-	}
+		print_error_ctx("Missing one or more directives before map", ctx, NULL);
 }

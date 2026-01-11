@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_or_parse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/16 15:19:33 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:32:10 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:20:41 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ void	dup_or_parse_texture(t_hdr_ctx *ctx, char *trim, bool *seen,
 	if (*seen)
 	{
 		free(trim);
-		free_split(ctx->lines);
-		print_error(dup_msg);
+		print_error_ctx(dup_msg, ctx, NULL);
 	}
 	*seen = true;
-	parse_texture(trim, ctx->scene);
+	parse_texture(trim, ctx);
 }
 
 void	dup_or_parse_resolution(t_hdr_ctx *ctx, char *trim, bool *seen)
@@ -31,8 +30,7 @@ void	dup_or_parse_resolution(t_hdr_ctx *ctx, char *trim, bool *seen)
 	if (*seen)
 	{
 		free(trim);
-		free_split(ctx->lines);
-		print_error("Duplicate R directive");
+		print_error_ctx("Duplicate R directive", ctx, NULL);
 	}
 	*seen = true;
 	parse_resolution(trim, ctx->scene);
@@ -44,9 +42,8 @@ void	dup_or_parse_color(t_hdr_ctx *ctx, char *trim, bool *seen,
 	if (*seen)
 	{
 		free(trim);
-		free_split(ctx->lines);
-		print_error(dup_msg);
+		print_error_ctx(dup_msg, ctx, NULL);
 	}
 	*seen = true;
-	parse_color(trim, ctx->scene);
+	parse_color(trim, ctx);
 }

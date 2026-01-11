@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:21:38 by veronikalub       #+#    #+#             */
-/*   Updated: 2026/01/02 14:43:37 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:44:17 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,17 @@ static int	process_header_line(t_hdr_ctx *ctx, int i)
 
 	trim = ft_strtrim(ctx->lines[i], " \t");
 	if (!trim)
-	{
-		free_split(ctx->lines);
-		print_error("alloc fail");
-	}
+		print_error_ctx("alloc fail", ctx, NULL);
+	ctx->current_trim = trim;
 	kind = decide_line_kind(ctx, i, trim);
 	res = handle_kind_result(kind, trim);
 	if (res != 0)
+	{
+		ctx->current_trim = NULL;
 		return (res);
+	}
 	handle_header_trim_ctx(ctx, trim);
+	ctx->current_trim = NULL;
 	free(trim);
 	return (i + 1);
 }
@@ -89,6 +91,7 @@ int	parse_header_until_map(char **lines, t_scene *scene)
 	ctx.lines = lines;
 	ctx.scene = scene;
 	ctx.map_start = -1;
+	ctx.current_trim = NULL;
 	init_seen_flags(&ctx);
 	i = 0;
 	while (ctx.lines[i])

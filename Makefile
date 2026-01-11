@@ -6,7 +6,7 @@
 #    By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 00:00:00 by haiqbal           #+#    #+#              #
-#    Updated: 2026/01/02 14:47:07 by haiqbal          ###   ########.fr        #
+#    Updated: 2026/01/11 20:11:02 by haiqbal          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(EXEC_DIR)/init_player.c \
 	   $(EXEC_DIR)/keys.c \
 	   $(EXEC_DIR)/movement.c \
+	   $(EXEC_DIR)/collision.c \
 	   $(EXEC_DIR)/rotation.c \
 	   $(EXEC_DIR)/utils1.c \
 	   $(EXEC_DIR)/graphics.c \
@@ -82,6 +83,7 @@ SRCS = $(SRC_DIR)/main.c \
 	   $(PARS_DIR)/parse_rgb.c \
 	   $(PARS_DIR)/parse_texture.c \
 	   $(PARS_DIR)/parse_scene.c \
+	   $(PARS_DIR)/scene_init.c \
 	   $(PARS_DIR)/parser_free.c \
 	   $(PARS_DIR)/parser_check.c \
 	   $(UTL_DIR)/utils.c \

@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 14:27:18 by haiqbal           #+#    #+#             */
-/*   Updated: 2026/01/02 14:16:32 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:48:14 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	run_engine(t_scene *scene)
 	if (!cub)
 	{
 		free_full_scene(scene);
-		print_error("run_engine: malloc failed");
+		print_error_ctx("run_engine: malloc failed", NULL, NULL);
 	}
 	cub->scene = *scene;
 	free(scene);

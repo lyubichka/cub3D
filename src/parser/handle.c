@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 19:24:14 by veronikalub       #+#    #+#             */
-/*   Updated: 2026/01/02 14:43:37 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:20:41 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	handle_header_trim_ctx(t_hdr_ctx *ctx, char *trim)
 	if (!handled)
 	{
 		free(trim);
-		free_split(ctx->lines);
-		print_error("Unknown identifier in header");
+		print_error_ctx("Unknown identifier in header", ctx, NULL);
 	}
 }

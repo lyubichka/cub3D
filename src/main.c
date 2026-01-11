@@ -19,13 +19,14 @@ static void	check_arguments(int argc, char **argv, bool *save_flag)
 {
 	*save_flag = false;
 	if (argc < 2 || argc > 3)
-		print_error("wrong number of arguments");
+		print_error_ctx("wrong number of arguments", NULL, NULL);
 	if (argc == 3)
 	{
 		if (ft_strncmp(argv[2], "--save", 6) == 0)
 			*save_flag = true;
 		else
-			print_error("Second argument must be '--save' if present");
+			print_error_ctx("Second argument must be '--save' if present", NULL,
+				NULL);
 	}
 }
 
@@ -34,7 +35,7 @@ static void	handle_save_mode(t_scene *scene)
 	if (save_mode_render_and_write(scene, "output.bmp") != 0)
 	{
 		free_full_scene(scene);
-		print_error("Failed to save BMP file");
+		print_error_ctx("Failed to save BMP file", NULL, NULL);
 	}
 	free_full_scene(scene);
 }
@@ -47,7 +48,7 @@ int	main(int argc, char **argv)
 	check_arguments(argc, argv, &save_flag);
 	scene = parse_scene(argv[1], save_flag);
 	if (!scene)
-		print_error("failed to parse scene");
+		print_error_ctx("failed to parse scene", NULL, NULL);
 	if (save_flag)
 	{
 		handle_save_mode(scene);

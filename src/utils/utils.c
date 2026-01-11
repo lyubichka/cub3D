@@ -3,17 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 16:59:19 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:31:23 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:44:12 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3D.h"
 
-void	print_error(const char *msg)
+void	print_error_ctx(const char *msg, t_hdr_ctx *ctx, char **extra)
 {
+	if (extra)
+		free_split(extra);
+	if (ctx)
+	{
+		if (ctx->current_trim)
+			free(ctx->current_trim);
+		if (ctx->lines)
+			free_split(ctx->lines);
+		if (ctx->scene)
+			free_full_scene(ctx->scene);
+	}
 	ft_putstr_fd("Error\n", 2);
 	ft_putstr_fd((char *)msg, 2);
 	ft_putstr_fd("\n", 2);

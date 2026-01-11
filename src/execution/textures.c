@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 14:21:49 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 02:03:28 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:48:14 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	load_single_texture(t_cub3d *cub, t_image *tex, const char *path)
 	if (!path)
 	{
 		ft_putstr_fd("Error: NULL texture path\n", 2);
-		print_error("Texture path is NULL");
+		print_error_ctx("Texture path is NULL", NULL, NULL);
 	}
 	img = mlx_xpm_file_to_image(cub->mlx, (char *)path, &w, &h);
 	if (!img)
@@ -29,7 +29,7 @@ static void	load_single_texture(t_cub3d *cub, t_image *tex, const char *path)
 		ft_putstr_fd("Error: Failed to load texture: ", 2);
 		ft_putstr_fd((char *)path, 2);
 		ft_putstr_fd("\n", 2);
-		print_error("Failed to load texture XPM");
+		print_error_ctx("Failed to load texture XPM", NULL, NULL);
 	}
 	tex->img = img;
 	tex->addr = mlx_get_data_addr(img, &tex->bpp, &tex->line_len, &tex->endian);

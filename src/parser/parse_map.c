@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:59:42 by veronikalub       #+#    #+#             */
-/*   Updated: 2025/11/26 02:39:33 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:46:05 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static void	validate_map_line(t_map_build_ctx *ctx, int i)
 		c = ctx->scene->map.grid[i][k];
 		if (!(c == '0' || c == '1' || c == 'N' || c == 'S' || c == 'E'
 				|| c == 'W' || c == ' '))
-			print_error("Invalid character in map");
+			print_error_ctx("Invalid character in map", NULL, NULL);
 		if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 		{
 			if (ctx->player_found)
-				print_error("Multiple player positions found");
+				print_error_ctx("Multiple player positions found", NULL, NULL);
 			ctx->player_found = 1;
 			ctx->scene->map.player_x = k;
 			ctx->scene->map.player_y = i;
@@ -45,7 +45,7 @@ static void	build_map_line(t_map_build_ctx *ctx, int i, t_scene *scene)
 	src_len = ft_strlen(ctx->lines[ctx->start_line + i]);
 	scene->map.grid[i] = (char *)malloc(ctx->max_width + 1);
 	if (!scene->map.grid[i])
-		print_error("Map line allocation failed");
+		print_error_ctx("Map line allocation failed", NULL, NULL);
 	j = 0;
 	while (j < src_len)
 	{
@@ -85,15 +85,15 @@ static void	preflight_map(t_map_build_ctx *ctx)
 		i++;
 	ctx->map_lines = i - start;
 	if (ctx->map_lines <= 0)
-		print_error("No map found in .cub file");
+		print_error_ctx("No map found in .cub file", NULL, NULL);
 	if (ctx->map_lines > MAX_MAP_HEIGHT)
-		print_error("Map height exceeds MAX_MAP_HEIGHT");
+		print_error_ctx("Map height exceeds MAX_MAP_HEIGHT", NULL, NULL);
 	ctx->scene->map.grid = malloc(sizeof(char *) * (ctx->map_lines + 1));
 	if (!ctx->scene->map.grid)
-		print_error("Memory allocation failed for map");
+		print_error_ctx("Memory allocation failed for map", NULL, NULL);
 	ctx->max_width = get_max_width(ctx->lines, start, start + ctx->map_lines);
 	if (ctx->max_width > MAX_MAP_WIDTH)
-		print_error("Map width exceeds MAX_MAP_WIDTH");
+		print_error_ctx("Map width exceeds MAX_MAP_WIDTH", NULL, NULL);
 }
 
 void	parse_map(char **lines, int start_line, t_scene *scene)
@@ -109,7 +109,7 @@ void	parse_map(char **lines, int start_line, t_scene *scene)
 	scene->map.height = ctx.map_lines;
 	scene->map.width = ctx.max_width;
 	if (!ctx.player_found)
-		print_error("No player start position found");
+		print_error_ctx("No player start position found", NULL, NULL);
 	check_top_bottom_borders(scene);
 	check_left_right_borders(scene);
 	check_interior_cells(scene);

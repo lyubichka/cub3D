@@ -6,7 +6,7 @@
 /*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/30 17:18:11 by veronikalub       #+#    #+#             */
-/*   Updated: 2026/01/02 14:43:43 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 20:00:19 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	read_identifier(char *line, int *i, char id[3])
 		(*i)++;
 	len = *i - start;
 	if (len < 1 || len > 2)
-		print_error("Invalid texture identifier length");
+		print_error_ctx("Invalid texture identifier length", NULL, NULL);
 	id[0] = line[start];
 	if (len == 2)
 		id[1] = line[start + 1];
@@ -38,66 +38,68 @@ static char	*dup_trim_path_or_fail(char *line, int i)
 	char	*trimmed;
 
 	if (!line[i])
-		print_error("Texture path is missing");
+		print_error_ctx("Texture path is missing", NULL, NULL);
 	path = ft_strdup(line + i);
 	if (!path)
-		print_error("Memory error in parse_texture");
+		print_error_ctx("Memory error in parse_texture", NULL, NULL);
 	trimmed = ft_strtrim(path, " \t");
 	free(path);
 	if (!trimmed || trimmed[0] == '\0')
 	{
 		if (trimmed)
 			free(trimmed);
-		print_error("Texture path is empty");
+		print_error_ctx("Texture path is empty", NULL, NULL);
 	}
 	return (trimmed);
 }
 
-static void	set_texture_path(char **target, const char *dup_msg, char *trimmed)
+static void	set_texture_path(char **target, const char *dup_msg, char *trimmed,
+		t_hdr_ctx *ctx)
 {
 	if (*target)
 	{
 		free(trimmed);
-		print_error(dup_msg);
+		print_error_ctx(dup_msg, ctx, NULL);
 	}
 	*target = ft_strdup(trimmed);
 	if (!*target)
 	{
 		free(trimmed);
-		print_error("Memory error while duplicating texture path");
+		print_error_ctx("Memory error while duplicating texture path", ctx,
+			NULL);
 	}
 }
 
-static void	assign_texture_by_id(t_scene *scene, const char *id, char *trimmed)
+static void	assign_texture_by_id(t_hdr_ctx *ctx, const char *id, char *trimmed)
 {
 	if (ft_strncmp(id, "NO", 3) == 0)
-		set_texture_path(&scene->textures.north, "Duplicate texture NO",
-			trimmed);
+		set_texture_path(&ctx->scene->textures.north, "Duplicate texture NO",
+			trimmed, ctx);
 	else if (ft_strncmp(id, "SO", 3) == 0)
-		set_texture_path(&scene->textures.south, "Duplicate texture SO",
-			trimmed);
+		set_texture_path(&ctx->scene->textures.south, "Duplicate texture SO",
+			trimmed, ctx);
 	else if (ft_strncmp(id, "WE", 3) == 0)
-		set_texture_path(&scene->textures.west, "Duplicate texture WE",
-			trimmed);
+		set_texture_path(&ctx->scene->textures.west, "Duplicate texture WE",
+			trimmed, ctx);
 	else if (ft_strncmp(id, "EA", 3) == 0)
-		set_texture_path(&scene->textures.east, "Duplicate texture EA",
-			trimmed);
+		set_texture_path(&ctx->scene->textures.east, "Duplicate texture EA",
+			trimmed, ctx);
 	else
 	{
 		free(trimmed);
-		print_error("Unknown texture identifier");
+		print_error_ctx("Unknown texture identifier", ctx, NULL);
 	}
 }
 
-void	parse_texture(char *line, t_scene *scene)
+void	parse_texture(char *line, t_hdr_ctx *ctx)
 {
 	int		i;
 	int		fd;
 	char	id[3];
 	char	*trimmed;
 
-	if (!line || !scene)
-		print_error("parse_texture: invalid arguments");
+	if (!line || !ctx || !ctx->scene)
+		print_error_ctx("parse_texture: invalid arguments", NULL, NULL);
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
@@ -109,9 +111,10 @@ void	parse_texture(char *line, t_scene *scene)
 	if (fd < 0)
 	{
 		free(trimmed);
-		print_error("Texture file not found or cannot be opened");
+		print_error_ctx("Texture file not found or cannot be opened", ctx,
+			NULL);
 	}
 	close(fd);
-	assign_texture_by_id(scene, id, trimmed);
+	assign_texture_by_id(ctx, id, trimmed);
 	free(trimmed);
 }

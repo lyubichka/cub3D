@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: haiqbal <haiqbal@student.42abudhabi.ae>    +#+  +:+       +#+        */
+/*   By: haiqbal <haiqbal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/02 19:41:14 by haiqbal           #+#    #+#             */
-/*   Updated: 2025/11/26 02:12:07 by haiqbal          ###   ########.fr       */
+/*   Updated: 2026/01/11 19:47:08 by haiqbal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 void	init_image(void *mlx, t_image *img, int width, int height)
 {
 	if (width <= 0 || height <= 0)
-		print_error("init_image: invalid width/height");
+		print_error_ctx("init_image: invalid width/height", NULL, NULL);
 	img->img = mlx_new_image(mlx, width, height);
 	if (!img->img)
-		print_error("mlx_new_image failed");
+		print_error_ctx("mlx_new_image failed", NULL, NULL);
 	img->addr = mlx_get_data_addr(img->img, &img->bpp, &img->line_len,
 			&img->endian);
 	if (!img->addr)
-		print_error("mlx_get_data_addr failed");
+		print_error_ctx("mlx_get_data_addr failed", NULL, NULL);
 }
 
 /*
